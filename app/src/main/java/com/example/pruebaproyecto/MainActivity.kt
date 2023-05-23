@@ -19,17 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import com.example.pruebaproyecto.pantallas.login.LoginScreen
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //WindowCompat.setDecorFitsSystemWindows(window,false)
         setContent {
             AppTheme{
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-
-                }
+               LoginScreen()
             }
         }
     }
@@ -50,7 +50,14 @@ fun ComponentTest(){
 }
 @Composable
 @Preview
-fun ButtonPreview(){
+fun mainPreview(){
+    AppTheme {
+        LoginScreen()
+    }
+}
+@Composable
+@Preview
+fun botonPreview(){
     AppTheme {
         ComponentTest()
     }
