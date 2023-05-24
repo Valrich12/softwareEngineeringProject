@@ -14,16 +14,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,13 +48,26 @@ import com.example.pruebaproyecto.R
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import com.example.pruebaproyecto.pantallas.components.CustomTextField
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
 fun LoginScreen(){
+    val emailValue      = rememberSaveable{ mutableStateOf("") }
+    val passwordValue   = rememberSaveable{ mutableStateOf("") }
+    var passwordVisibility by remember { mutableStateOf(false) }
+    val focusManager    = LocalFocusManager.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -122,16 +141,56 @@ fun LoginScreen(){
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            var text by remember { mutableStateOf("") }
-                            OutlinedTextField(
-                                value = text ,
-                                onValueChange = {text = it},
-                                label = {Text("Prueba")}
-                                )
+                            CustomTextField(
+                                textFieldValue = emailValue,
+                                textLabel = "Email" ,
+                                textPlaceHolder = "email@ejemplo.com" ,
+                                keyboardType = KeyboardType.Email ,
+                                keyboardActions = KeyboardActions(
+                                    onNext = {
+                                        focusManager.moveFocus(FocusDirection.Down)
+                                    }
+                                ) ,
+                                imeAction = ImeAction.Next
+                            )
+                            CustomTextField(
+                                textFieldValue = passwordValue,
+                                textLabel = "Password" ,
+                                textPlaceHolder = "Password" ,
+                                keyboardType = KeyboardType.Password,
+                                keyboardActions = KeyboardActions(
+                                    onDone =  {
+                                        focusManager.clearFocus()
+                                    }
+                                ) ,
+                                imeAction = ImeAction.Done,
+                                trailingIcon = {
+                                    IconButton(
+                                        onClick = {
+                                            passwordVisibility = !passwordVisibility
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = if(passwordVisibility){
+                                                Icons.Default.Visibility
+                                            }else{
+                                                Icons.Default.VisibilityOff
+                                            },
+                                            contentDescription = "IconoPassword"
+                                        )
+                                    }
+                                },
+                                visualTransformation = if(passwordVisibility){
+                                    VisualTransformation.None
+                                }else{
+                                    PasswordVisualTransformation()
+                                }
+                            )
 
                         }
 
                     }
+
                 }
                 FloatingActionButton(
                     modifier = Modifier
