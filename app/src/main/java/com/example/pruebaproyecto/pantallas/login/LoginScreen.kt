@@ -7,6 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -74,15 +78,11 @@ fun LoginScreen(){
             .background(MaterialTheme.colorScheme.background),
 
     ){
-        ConstraintLayout() {
-            val logoBox = createRef()
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .constrainAs(logoBox) {
-                        top.linkTo(parent.bottom, margin = 40.dp)
-                    },
-                contentAlignment = Alignment.TopCenter,
+                    .fillMaxWidth()
+                    .height(400.dp),
+                contentAlignment = Alignment.Center,
             )
             {
                 Image(
@@ -95,13 +95,14 @@ fun LoginScreen(){
 
                 )
             }
-        }
+
+
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
             ConstraintLayout{
-                val(surface,fab) = createRefs()
+                val surface = createRef()
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -155,8 +156,8 @@ fun LoginScreen(){
                             )
                             CustomTextField(
                                 textFieldValue = passwordValue,
-                                textLabel = "Password" ,
-                                textPlaceHolder = "Password" ,
+                                textLabel = "Contraseña" ,
+                                textPlaceHolder = "Contraseña" ,
                                 keyboardType = KeyboardType.Password,
                                 keyboardActions = KeyboardActions(
                                     onDone =  {
@@ -188,26 +189,53 @@ fun LoginScreen(){
                             )
 
                         }
+                        Spacer(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth().height(60.dp),
+
+                            ) {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceAround
+                            ) {
+                                Column(
+                                    modifier = Modifier.fillMaxHeight(),
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    TextButton(
+                                        onClick = { /*TODO*/ }
+                                    ) {
+                                        Text(text = "Crear una Cuenta")
+                                    }
+                                }
+                                Column() {
+                                    FloatingActionButton(
+                                        modifier = Modifier
+                                            .size(72.dp),
+
+                                        onClick = { /*TODO*/ }
+                                    ){
+                                        Icon(
+                                            modifier = Modifier.size(42.dp),
+                                            imageVector = Icons.Default.ArrowForward,
+                                            contentDescription = "forward Icon"
+                                        )
+
+                                    }
+                                }
+                            }
+
+
+                        }
 
                     }
 
-                }
-                FloatingActionButton(
-                    modifier = Modifier
-                        .size(72.dp)
-                        .constrainAs(fab) {
-                            top.linkTo(surface.top, margin = (-36).dp)
-                            end.linkTo(surface.end, margin = 36.dp)
-                        },
-                    onClick = { /*TODO*/ }
-                ){
-                    Icon(
-                        modifier = Modifier.size(42.dp),
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "forward Icon"
-                    )
 
                 }
+
+
             }
         }
     }
