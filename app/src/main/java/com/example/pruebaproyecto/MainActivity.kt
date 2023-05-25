@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.example.pruebaproyecto.pantallas.login.LoginScreen
+import com.example.pruebaproyecto.pantallas.registro.RegistroScreen
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
         //WindowCompat.setDecorFitsSystemWindows(window,false)
         setContent {
             AppTheme{
-               LoginScreen()
+               RegistroScreen()
             }
         }
     }
@@ -52,7 +53,7 @@ fun ComponentTest(){
 @Preview
 fun mainPreview(){
     AppTheme {
-        LoginScreen()
+        RegistroScreen()
     }
 }
 @Composable
