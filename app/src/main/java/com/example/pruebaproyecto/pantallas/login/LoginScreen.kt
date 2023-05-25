@@ -194,11 +194,11 @@ fun LoginScreen(){
                             .height(60.dp))
                         Column(
                             modifier = Modifier
-                                .fillMaxWidth().height(60.dp),
+                                .fillMaxWidth().height(70.dp),
 
                             ) {
                             Row(
-                                horizontalArrangement = Arrangement.SpaceAround
+                                horizontalArrangement = Arrangement.spacedBy(160.dp)
                             ) {
                                 Column(
                                     modifier = Modifier.fillMaxHeight(),
