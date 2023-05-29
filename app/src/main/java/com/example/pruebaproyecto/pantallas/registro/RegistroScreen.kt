@@ -82,7 +82,8 @@ fun RegistroScreen() {
 
                  Text(
                      text = "Crea Una Cuenta",
-                     style = MaterialTheme.typography.headlineLarge
+                     style = MaterialTheme.typography.headlineLarge,
+                     color = MaterialTheme.colorScheme.onBackground
                  )
                 }
             Column(
