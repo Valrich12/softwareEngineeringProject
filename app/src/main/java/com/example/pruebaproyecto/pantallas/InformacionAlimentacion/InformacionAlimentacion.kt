@@ -1,2 +1,0 @@
-package com.example.pruebaproyecto.pantallas.InformacionAlimentacion
-
