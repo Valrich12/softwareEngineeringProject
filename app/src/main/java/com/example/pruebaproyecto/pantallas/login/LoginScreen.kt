@@ -213,7 +213,7 @@ fun LoginScreen(){
                                 Column() {
                                     FloatingActionButton(
                                         modifier = Modifier
-                                            .size(72.dp),
+                                            .size(70.dp),
 
                                         onClick = { /*TODO*/ }
                                     ){
