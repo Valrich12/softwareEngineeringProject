@@ -11,6 +11,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -42,7 +43,40 @@ fun InfoGrafica(
             placeable
         }
 
-        layout(){}
+        var totalHeight = grHeaderPlaceable.height
+
+        val barPlaceables = nutrBarsMeasurable.map { measurable ->
+            val barParentData = measurable.parentData as GramsGraphParentData
+            val barWidth = (barParentData.cantidad * grHeaderPlaceable.width).roundToInt()
+
+            val barPlaceable = measurable.measure(
+                constraints.copy(
+                    minWidth = barWidth,
+                    maxWidth = barWidth
+                )
+            )
+            totalHeight += barPlaceable.height
+            barPlaceable
+        }
+
+        val totalWidth = nutrPlaceables.first().width + grHeaderPlaceable.width
+
+        layout(totalWidth,totalHeight){
+            val xPosition = nutrPlaceables.first().width
+            var yPosition = grHeaderPlaceable.height
+
+            grHeaderPlaceable.place(xPosition,0)
+
+            barPlaceables.forEachIndexed{ index, barPlaceable ->
+                val barParentData = barPlaceable.parentData as GramsGraphParentData
+                barPlaceable.place(xPosition,yPosition)
+
+                val nutrLabelPlaceable = nutrPlaceables[index]
+                nutrLabelPlaceable.place(x = 0, y = yPosition)
+
+                yPosition += barPlaceable.height
+            }
+        }
 
     }
 }
@@ -52,6 +86,15 @@ fun InfoGrafica(
 
 object GramsGraphScope {
     @Stable
+    fun Modifier.gramsGraphBar(
+        cantitad: Float,
+    ):Modifier{
+      return then(
+          GramsGraphParentData(
+              cantidad = cantitad,
+          )
+      )
+    }
 
 }
 
@@ -59,7 +102,6 @@ object GramsGraphScope {
 
 class  GramsGraphParentData(
     val cantidad: Float,
-    val offset: Float,
 ) : ParentDataModifier {
     override fun Density.modifyParentData(parentData: Any?) = this@GramsGraphParentData
 }
