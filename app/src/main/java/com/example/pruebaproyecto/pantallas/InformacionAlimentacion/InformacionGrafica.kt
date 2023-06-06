@@ -2,15 +2,24 @@ package com.example.pruebaproyecto.pantallas.InformacionAlimentacion
 
 
 import androidx.compose.foundation.layout.LayoutScopeMarker
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.GramsGraphScope.gramsGraphBar
+import com.example.pruebaproyecto.ui.theme.AppTheme
 import kotlin.math.roundToInt
 
 
@@ -46,8 +55,8 @@ fun InfoGrafica(
         var totalHeight = grHeaderPlaceable.height
 
         val barPlaceables = nutrBarsMeasurable.map { measurable ->
-            val barParentData = measurable.parentData as GramsGraphParentData
-            val barWidth = (barParentData.cantidad * grHeaderPlaceable.width).roundToInt()
+            //val barParentData = measurable.parentData as GramsGraphParentData
+            val barWidth = (300.5f * grHeaderPlaceable.width).roundToInt()
 
             val barPlaceable = measurable.measure(
                 constraints.copy(
@@ -68,7 +77,6 @@ fun InfoGrafica(
             grHeaderPlaceable.place(xPosition,0)
 
             barPlaceables.forEachIndexed{ index, barPlaceable ->
-                val barParentData = barPlaceable.parentData as GramsGraphParentData
                 barPlaceable.place(xPosition,yPosition)
 
                 val nutrLabelPlaceable = nutrPlaceables[index]
@@ -87,21 +95,59 @@ fun InfoGrafica(
 object GramsGraphScope {
     @Stable
     fun Modifier.gramsGraphBar(
-        cantitad: Float,
+        cantidad: Float,
     ):Modifier{
+      val cantidaddevuelta = cantidad
       return then(
           GramsGraphParentData(
-              cantidad = cantitad,
+              cantidad = cantidaddevuelta,
           )
       )
     }
 
 }
+@Preview
+@Composable
+fun graphPreview() {
+    AppTheme() {
+        InfoGrafica(
+            grHeader = {
+                       Row() {
+                           Text(text = "1")
+                           Text(text = "1")
+                           Text(text = "1")
+                           Text(text = "1")
+                       }
+            }, nutrCounts = 2, nutrLabel ={index ->
+                Text(text = "Hola")
+            },
+            nutrBar ={ GramsBar(
+                modifier = Modifier
+                    .gramsGraphBar(
+                        cantidad = 12f
+                    )
+            )}
+        )
 
 
+    }
+}
 
 class  GramsGraphParentData(
     val cantidad: Float,
 ) : ParentDataModifier {
     override fun Density.modifyParentData(parentData: Any?) = this@GramsGraphParentData
+}
+
+@Composable
+private fun graphLabelPrueba(labelText: String) {
+    Text(
+        text = labelText
+        ,
+        Modifier
+            .height(24.dp)
+            .padding(start = 8.dp, end = 24.dp),
+        style = MaterialTheme.typography.bodyLarge,
+        textAlign = TextAlign.Center
+    )
 }

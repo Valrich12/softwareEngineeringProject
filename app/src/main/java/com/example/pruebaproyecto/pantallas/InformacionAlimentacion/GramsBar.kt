@@ -1,21 +1,25 @@
 package com.example.pruebaproyecto.pantallas.InformacionAlimentacion
 
 
-import androidx.compose.animation.core.animateDpAsState
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.ui.draw.DrawResult
+import androidx.compose.foundation.layout.height
 import androidx.compose.ui.draw.drawWithCache
-
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pruebaproyecto.ui.theme.AppTheme
+import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
+import com.example.pruebaproyecto.ui.theme.md_theme_light_secondary
 
 @Composable
 fun GramsBar(
+    modifier: Modifier = Modifier
 ) {
     Column {
         GramsRoundedBar(
@@ -24,13 +28,31 @@ fun GramsBar(
 }
 
 @Composable
+
 private fun GramsRoundedBar(
 ){
    Spacer(modifier = Modifier
        .drawWithCache {
-           val width = this.size.width
-           val CornerRadiusPx = 10.dp.toPx()
+           val brush = Brush.verticalGradient(
+               listOf(
+                   md_theme_light_primaryContainer,
+                   md_theme_light_secondary
+               )
+           )
 
+           onDrawBehind {
+               drawRoundRect(brush, cornerRadius = CornerRadius(10.dp.toPx()))
+           }
        }
+       .fillMaxWidth()
+       .height(24.dp)
    )
+}
+
+@Preview
+@Composable
+fun BarPreview(){
+    AppTheme {
+      GramsBar()
+    }
 }
