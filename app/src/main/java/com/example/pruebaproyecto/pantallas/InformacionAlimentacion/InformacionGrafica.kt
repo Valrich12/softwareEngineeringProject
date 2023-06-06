@@ -102,10 +102,9 @@ object GramsGraphScope {
     fun Modifier.gramsGraphBar(
         cantidad: Float,
     ): Modifier {
-        var cantidadRetorno = cantidad/3000f
         return then(
           GramsGraphParentData(
-              cantidad = cantidadRetorno
+              cantidad = cantidad
           )
       )
     }

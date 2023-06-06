@@ -47,7 +47,7 @@ private fun GramsRoundedBar(
            }
        }
        .fillMaxWidth()
-       .height(24.dp)
+       .height(30.dp)
    )
 }
 
