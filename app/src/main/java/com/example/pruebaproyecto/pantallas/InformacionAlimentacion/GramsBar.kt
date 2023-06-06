@@ -21,7 +21,9 @@ import com.example.pruebaproyecto.ui.theme.md_theme_light_secondary
 fun GramsBar(
     modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         GramsRoundedBar(
         )
     }
@@ -41,7 +43,7 @@ private fun GramsRoundedBar(
            )
 
            onDrawBehind {
-               drawRoundRect(brush, cornerRadius = CornerRadius(10.dp.toPx()))
+               drawRoundRect(brush, cornerRadius = CornerRadius(5.dp.toPx()))
            }
        }
        .fillMaxWidth()
