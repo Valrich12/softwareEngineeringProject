@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pruebaproyecto.ui.theme.AppTheme
+import com.example.pruebaproyecto.ui.theme.md_theme_light_inversePrimary
 import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 import com.example.pruebaproyecto.ui.theme.md_theme_light_secondary
 
@@ -37,8 +39,8 @@ private fun GramsRoundedBar(
        .drawWithCache {
            val brush = Brush.verticalGradient(
                listOf(
-                   md_theme_light_primaryContainer,
-                   md_theme_light_secondary
+                   Color(0xFF48A231),
+                   Color(0xFF48A231)
                )
            )
 

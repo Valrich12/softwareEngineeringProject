@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,13 @@ fun InformacionAlimentacion() {
                                 top.linkTo(graphEner.bottom, margin = 20.dp)
                             }) {
                         InformacionProteinaGraph()
+                    }
+                    Box(
+                        modifier = Modifier
+                            .constrainAs(graphGrasa){
+                                top.linkTo(graphProt.bottom, margin = 20.dp)
+                            }) {
+                        InformacionGrasaGraph()
                     }
 
                 }
@@ -119,6 +127,33 @@ private fun InformacionProteinaGraph (
 
 }
 
+@Composable
+private fun InformacionGrasaGraph (
+    modifier: Modifier=Modifier
+) {
+    val cantidadesBar = listOf<Float>(fakeDataGrasa.cantidadActual, fakeDataGrasa.cantidadRecomendada)
+    val labels = listOf<String>(fakeDataGrasa.tipoMacro+" \nActual", fakeDataGrasa.tipoMacro +" Recomendada")
+    val cantidades = listOf<Int>(10,20,30,40,50,60,70,80,90,100)
+    InfoGrafica(
+        grHeader ={CantidadHeader(cantidades)},
+        nutrCounts = 2,
+        nutrLabel = {index ->
+            graphLabel(labels[index])
+        },
+        nutrBar = {index ->
+            GramsBar(
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .gramsGraphBar(
+                        cantidad = cantidadesBar[index] / 100f
+                    )
+            )
+        }
+    )
+
+
+}
+
 
 @Composable
 
@@ -131,8 +166,11 @@ private fun graphLabel(labelText: String) {
             ,
             Modifier
                 .height(30.dp),
+            color = MaterialTheme.colorScheme.primary
+            ,
             style = MaterialTheme.typography.bodySmall.copy(
-                fontSize = 10.sp
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold
             ),
 
         )
@@ -154,10 +192,11 @@ private fun CantidadHeader(cantidades:List<Int>){
                 modifier = Modifier
                     .width(30.dp)
                     .padding(vertical = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp
                 )
             )
-            Spacer(modifier = Modifier.height(16.dp).width(1.dp).background(Color.Black))
+            Spacer(modifier = Modifier.height(16.dp).width(1.dp).background(MaterialTheme.colorScheme.onBackground))
         }
 
 
@@ -177,3 +216,5 @@ fun InfoScreenPreview() {
 val fakeDataEnergia = InfoAlimentacion("Energia",900f,1600f)
 
 val fakeDataProteina = InfoAlimentacion("Proteina",90f,73f)
+
+val fakeDataGrasa = InfoAlimentacion("Grasa",80f,10f)
