@@ -33,35 +33,70 @@ import com.example.pruebaproyecto.ui.theme.AppTheme
 fun InformacionAlimentacion() {
 
     Box(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)) {
         Column(Modifier.fillMaxWidth()) {
             Box(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.background)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
+                    ,
+
             ) {
                 ConstraintLayout() {
-                    val(graphProt,graphEner,graphGrasa) = createRefs()
+                    val(graphProt,graphEner,graphGrasa,textoProt,textoEner,textoGras) = createRefs()
+
+
+                    Box(
+                        modifier = Modifier
+                            .constrainAs(textoEner){
+                                top.linkTo(parent.top, margin = 30.dp)
+                                start.linkTo(parent.start, margin = 15.dp)
+                            }
+                    ) {
+                        Text(text = "ENERGIA", color = MaterialTheme.colorScheme.onBackground)
+                    }
                     Box(
                         modifier = Modifier
                             .constrainAs(graphEner){
-                                top.linkTo(parent.top)
-                            }
+                                top.linkTo(textoEner.bottom)
+                                start.linkTo(parent.start, margin = 30.dp)
+                            },
                     ) {
                         InformacionEnergiaGraph()
                     }
                     Box(
                         modifier = Modifier
+                            .constrainAs(textoProt){
+                                top.linkTo(graphEner.bottom)
+                                start.linkTo(parent.start, margin = 15.dp)
+                            }
+                    ) {
+                        Text(text = "PROTEINA", color = MaterialTheme.colorScheme.onBackground)
+                    }
+                    Box(
+                        modifier = Modifier
                             .constrainAs(graphProt){
                                 top.linkTo(graphEner.bottom, margin = 20.dp)
+                                start.linkTo(parent.start, margin = 30.dp)
                             }) {
                         InformacionProteinaGraph()
                     }
                     Box(
                         modifier = Modifier
+                            .constrainAs(textoGras){
+                                top.linkTo(graphProt.bottom)
+                                start.linkTo(parent.start, margin = 15.dp)
+                            }
+                    ) {
+                        Text(text = "GRASA", color = MaterialTheme.colorScheme.onBackground)
+                    }
+                    Box(
+                        modifier = Modifier
                             .constrainAs(graphGrasa){
                                 top.linkTo(graphProt.bottom, margin = 20.dp)
+                                start.linkTo(parent.start, margin = 30.dp)
                             }) {
                         InformacionGrasaGraph()
                     }
@@ -79,7 +114,7 @@ private fun InformacionEnergiaGraph (
 ) {
     val cantidadesBar = listOf<Float>(fakeDataEnergia.cantidadActual, fakeDataEnergia.cantidadRecomendada)
     val labels = listOf<String>(fakeDataEnergia.tipoMacro+" Actual", fakeDataEnergia.tipoMacro +" Recomendada")
-    val cantidades = listOf<Int>(300,600,900,1200,1500,1800,2100,2400,2700,3000)
+    val cantidades = listOf<Int>(400,800,1200,1600,2000,2400,2800,3200)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
         nutrCounts = 2,
@@ -91,7 +126,7 @@ private fun InformacionEnergiaGraph (
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .gramsGraphBar(
-                        cantidad = cantidadesBar[index] / 3000f
+                        cantidad = cantidadesBar[index] / 3200f
                     )
             )
         }
@@ -106,7 +141,7 @@ private fun InformacionProteinaGraph (
 ) {
     val cantidadesBar = listOf<Float>(fakeDataProteina.cantidadActual, fakeDataProteina.cantidadRecomendada)
     val labels = listOf<String>(fakeDataProteina.tipoMacro+" Actual", fakeDataProteina.tipoMacro +" Recomendada")
-    val cantidades = listOf<Int>(10,20,30,40,50,60,70,80,90,100)
+    val cantidades = listOf<Int>(20,40,60,80,100,120,140)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
         nutrCounts = 2,
@@ -118,7 +153,7 @@ private fun InformacionProteinaGraph (
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .gramsGraphBar(
-                        cantidad = cantidadesBar[index] / 100f
+                        cantidad = cantidadesBar[index] / 140f
                     )
             )
         }
@@ -133,7 +168,7 @@ private fun InformacionGrasaGraph (
 ) {
     val cantidadesBar = listOf<Float>(fakeDataGrasa.cantidadActual, fakeDataGrasa.cantidadRecomendada)
     val labels = listOf<String>(fakeDataGrasa.tipoMacro+" \nActual", fakeDataGrasa.tipoMacro +" Recomendada")
-    val cantidades = listOf<Int>(10,20,30,40,50,60,70,80,90,100)
+    val cantidades = listOf<Int>(20,40,60,80,100,120,140)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
         nutrCounts = 2,
@@ -145,7 +180,7 @@ private fun InformacionGrasaGraph (
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .gramsGraphBar(
-                        cantidad = cantidadesBar[index] / 100f
+                        cantidad = cantidadesBar[index] / 140f
                     )
             )
         }
@@ -159,8 +194,8 @@ private fun InformacionGrasaGraph (
 
 private fun graphLabel(labelText: String) {
     Box(modifier = Modifier
-        .width(70.dp)
-        .padding(end = 3.dp)){
+        .width(93.dp)
+        .padding(end = 10.dp)){
         Text(
             text = labelText
             ,
@@ -169,7 +204,7 @@ private fun graphLabel(labelText: String) {
             color = MaterialTheme.colorScheme.primary
             ,
             style = MaterialTheme.typography.bodySmall.copy(
-                fontSize = 10.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
             ),
 
@@ -196,7 +231,10 @@ private fun CantidadHeader(cantidades:List<Int>){
                 style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp
                 )
             )
-            Spacer(modifier = Modifier.height(16.dp).width(1.dp).background(MaterialTheme.colorScheme.onBackground))
+            Spacer(modifier = Modifier
+                .height(16.dp)
+                .width(1.dp)
+                .background(MaterialTheme.colorScheme.onBackground))
         }
 
 
@@ -215,6 +253,6 @@ fun InfoScreenPreview() {
 
 val fakeDataEnergia = InfoAlimentacion("Energia",900f,1600f)
 
-val fakeDataProteina = InfoAlimentacion("Proteina",90f,73f)
+val fakeDataProteina = InfoAlimentacion("Proteina",100f,73f)
 
 val fakeDataGrasa = InfoAlimentacion("Grasa",80f,10f)
