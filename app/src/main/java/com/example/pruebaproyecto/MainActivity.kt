@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.example.pruebaproyecto.pantallas.DatosAlimentacion.IngresoAlimentos
+import com.example.pruebaproyecto.pantallas.DatosAlimentacion.ListaAlimentos
 import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoDatos
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavScreen

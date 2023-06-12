@@ -5,7 +5,7 @@ import java.util.jar.Attributes.Name
 data class Alimento(
     val nombre: String,
     val tipo:String,
-    val energia: Int = 0,
+    val carbohidratos: Int = 0,
     val proteina: Int = 0,
     val grasa: Int = 0
 )

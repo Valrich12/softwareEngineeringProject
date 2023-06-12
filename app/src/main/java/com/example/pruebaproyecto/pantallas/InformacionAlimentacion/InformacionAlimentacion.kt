@@ -55,7 +55,7 @@ fun InformacionAlimentacion() {
                                 start.linkTo(parent.start, margin = 15.dp)
                             }
                     ) {
-                        Text(text = "ENERGIA", color = MaterialTheme.colorScheme.onBackground)
+                        Text(text = "CARBOHIDRATOS", color = MaterialTheme.colorScheme.onBackground)
                     }
                     Box(
                         modifier = Modifier
@@ -113,7 +113,7 @@ private fun InformacionEnergiaGraph (
     modifier: Modifier = Modifier
 ) {
     val cantidadesBar = listOf<Float>(fakeDataEnergia.cantidadActual, fakeDataEnergia.cantidadRecomendada)
-    val labels = listOf<String>(fakeDataEnergia.tipoMacro+" Actual", fakeDataEnergia.tipoMacro +" Recomendada")
+    val labels = listOf<String>(fakeDataEnergia.tipoMacro+" Actuales", fakeDataEnergia.tipoMacro +" Recomendados")
     val cantidades = listOf<Int>(400,800,1200,1600,2000,2400,2800,3200)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
@@ -140,7 +140,7 @@ private fun InformacionProteinaGraph (
         modifier: Modifier=Modifier
 ) {
     val cantidadesBar = listOf<Float>(fakeDataProteina.cantidadActual, fakeDataProteina.cantidadRecomendada)
-    val labels = listOf<String>(fakeDataProteina.tipoMacro+" Actual", fakeDataProteina.tipoMacro +" Recomendada")
+    val labels = listOf<String>(fakeDataProteina.tipoMacro+" \nActual", fakeDataProteina.tipoMacro +" Recomendada")
     val cantidades = listOf<Int>(20,40,60,80,100,120,140)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
@@ -194,7 +194,7 @@ private fun InformacionGrasaGraph (
 
 private fun graphLabel(labelText: String) {
     Box(modifier = Modifier
-        .width(93.dp)
+        .width(100.dp)
         .padding(end = 10.dp)){
         Text(
             text = labelText
@@ -251,7 +251,7 @@ fun InfoScreenPreview() {
 }
 
 
-val fakeDataEnergia = InfoAlimentacion("Energia",900f,1600f)
+val fakeDataEnergia = InfoAlimentacion("Carbohidratos",900f,1600f)
 
 val fakeDataProteina = InfoAlimentacion("Proteina",100f,73f)
 

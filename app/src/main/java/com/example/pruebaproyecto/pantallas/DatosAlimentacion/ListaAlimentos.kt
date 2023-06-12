@@ -37,11 +37,10 @@ import androidx.compose.ui.unit.dp
 import com.example.pruebaproyecto.clases.Alimento
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
-var selectedItems = mutableListOf<String>()
+var selectedItems =  mutableListOf<String>()
 var tiposAlimento : HashMap<String, MutableList<Alimento>> = HashMap()
 
 fun recibirAlimentos(){
-    var prueba :String = "Prueba"
     //var tiposAlimentos = mutableListOf<MutableList<Alimento>>()
     var alimento1 = Alimento("Manzana","Frutas")
     var alimento2 = Alimento("Zanahoria","Verduras")
@@ -49,7 +48,7 @@ fun recibirAlimentos(){
     var alimento4 = Alimento("Fresa","Frutas")
     var alimento5 = Alimento("Tomate","Verduras")
     var alimento6 = Alimento("Arroz","Cereales")
-    var alimentoP = Alimento("Arroz","Cereales")
+    var alimentoP = Alimento("Raiz","Cereales")
     val frutas = mutableListOf<Alimento>(alimento1,alimento4)
     val verduras = mutableListOf<Alimento>(alimento2,alimento5)
     val cereales = mutableListOf<Alimento>(alimento3,alimento6)
@@ -184,6 +183,7 @@ fun ListaAlimentos() {
                                         contentAlignment = Alignment.Center
                                     ) {
                                         var name = key.value[itemsCount].nombre
+                                        isSelected = selectedItems.contains(name)
                                         FilterChip(
                                             selected = isSelected,
                                             onClick = {
@@ -237,14 +237,18 @@ fun ListaAlimentos() {
                     }
                 }
             }
-
-            selectedItems.forEach(){
-                Text(text = it)
-            }
         }
 
     }
 
+}
+
+@Preview
+@Composable
+fun previewLista() {
+    AppTheme {
+        ListaAlimentos()
+    }
 }
 
 
