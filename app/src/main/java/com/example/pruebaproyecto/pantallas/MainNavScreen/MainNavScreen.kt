@@ -39,9 +39,9 @@ fun MainNavScreen() {
     var pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
     val tabs = listOf(
+        TabItem.Recomendaciones,
+        TabItem.IngresoAlimentos,
         TabItem.Graficas,
-        TabItem.IngresoDatos,
-        TabItem.Contacto,
     )
     Box(modifier = Modifier
         .fillMaxSize()
@@ -73,6 +73,7 @@ fun MainNavScreen() {
                 TabsContent(
                     tabs = tabs,
                     pagerState = pagerState,
+
                     modifier = Modifier.fillMaxSize()
                 )
             }

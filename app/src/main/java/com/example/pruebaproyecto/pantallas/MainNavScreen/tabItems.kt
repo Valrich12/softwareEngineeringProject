@@ -10,14 +10,15 @@ import com.example.pruebaproyecto.pantallas.Recomendaciones.Recomendaciones
 
 typealias ComposableFun = @Composable () -> Unit
 sealed class TabItem(var title:String,var screen: ComposableFun){
+    object Recomendaciones : TabItem("Recomendaciones", {
+            Recomendaciones()
+    })
+    object IngresoAlimentos : TabItem("Ingreso de Alimentos", {
+            IngresoAlimentos()
+    })
     object Graficas : TabItem("Seguimiento", {
             InformacionAlimentacion()
 
     })
-    object IngresoDatos : TabItem("Recomendaciones", {
-            Recomendaciones()
-    })
-    object Contacto : TabItem("Ingreso de Alimentos", {
-            IngresoAlimentos()
-    })
+
 }

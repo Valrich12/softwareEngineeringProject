@@ -77,7 +77,7 @@ fun CustomCards(alimento:Alimento,buttonAction:()-> Unit) {
                     contentColor = Color.Black
                 )
             ) {
-                Text("Agregar Alimento", fontSize = 7.sp) }
+                Text("Agregar Alimento", fontSize = 10.sp) }
 
         }
 
