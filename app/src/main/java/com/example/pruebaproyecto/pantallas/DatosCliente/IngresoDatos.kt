@@ -28,6 +28,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,9 +47,10 @@ fun IngresoDatos() {
 
     val edad = remember { mutableStateOf("") }
     val estatura = remember { mutableStateOf("") }
+    val peso = remember{ mutableStateOf("") }
     val radioOptions = listOf("Masculino", "Femenino")
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
-
+    val focusManager = LocalFocusManager.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -115,7 +118,9 @@ fun IngresoDatos() {
                                     textPlaceHolder = "Edad",
                                     keyboardType = KeyboardType.Decimal,
                                     keyboardActions = KeyboardActions(
-                                        onNext = null
+                                        onNext = {
+                                            focusManager.moveFocus(FocusDirection.Next)
+                                        }
                                     ),
                                     imeAction = ImeAction.Next,
                                     Outline = true
@@ -132,9 +137,28 @@ fun IngresoDatos() {
                                     textPlaceHolder = "cm",
                                     keyboardType = KeyboardType.Decimal,
                                     keyboardActions = KeyboardActions(
-                                        onNext = null
+                                        onNext = {
+                                            focusManager.moveFocus(FocusDirection.Next)
+                                        }
                                     ),
                                     imeAction = ImeAction.Next,
+                                    Outline = true
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(40.dp))
+                            Box(
+                                modifier = Modifier
+                                    .width(80.dp)
+                            ) {
+                                CustomTextField(
+                                    textFieldValue = peso,
+                                    textLabel = "Peso",
+                                    textPlaceHolder = "Kg",
+                                    keyboardType = KeyboardType.Decimal,
+                                    keyboardActions = KeyboardActions(
+                                        onDone =  { focusManager.clearFocus()}
+                                    ),
+                                    imeAction = ImeAction.Done,
                                     Outline = true
                                 )
                             }
@@ -177,8 +201,6 @@ fun IngresoDatos() {
                                 }
                             }
                         }
-                        Text(text = selectedOption)
-
                     }
 
                 }

@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.RestoreFromTrash
-import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults.elevatedButtonColors
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
@@ -25,14 +25,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.clases.Alimento
 import com.example.pruebaproyecto.ui.theme.AppTheme
+import com.example.pruebaproyecto.ui.theme.md_theme_light_onSurface
+import com.example.pruebaproyecto.ui.theme.md_theme_light_outline
+import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 
 @Composable
 fun IngresoAlimentos() {
@@ -175,7 +178,8 @@ fun IngresoAlimentos() {
                                             IconButton(onClick = {  /*TODO*/ }) {
                                                 Icon(
                                                     imageVector = Icons.Default.Delete,
-                                                    contentDescription = "Icono Basura"
+                                                    contentDescription = "Icono Basura",
+                                                    tint = MaterialTheme.colorScheme.onBackground
                                                 )
                                             }
                                         }
@@ -191,10 +195,15 @@ fun IngresoAlimentos() {
                                     .fillMaxWidth()
                                     .height(15.dp))
                                 ElevatedButton(
-                                modifier = Modifier.fillMaxWidth(),
-                                onClick = { /*TODO*/ }) {
-                                Text("Agregar Alimento")
-                            } }
+                                    modifier = Modifier.fillMaxWidth(),
+                                    onClick = { /*TODO*/ },
+                                    colors = elevatedButtonColors(
+                                        containerColor = md_theme_light_primaryContainer,
+                                        contentColor = Color.Black
+                                    )
+                                ) { Text("Agregar Alimento") }
+
+                            }
                         }
 
                     }
@@ -220,6 +229,8 @@ val alimentos = mutableListOf(
     Alimento("Raiz","Cereales")
 
 )
+
+
 
 @Preview
 @Composable

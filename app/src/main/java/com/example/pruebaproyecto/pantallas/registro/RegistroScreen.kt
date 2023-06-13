@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.pantallas.components.CustomTextField
 import com.example.pruebaproyecto.ui.theme.AppTheme
+import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 
 @Composable
 fun RegistroScreen() {
@@ -224,7 +227,12 @@ fun RegistroScreen() {
                     Spacer(modifier = Modifier.height(16.dp))
                     ElevatedButton(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { /*TODO*/ }) {
+                        onClick = { /*TODO*/ },
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = md_theme_light_primaryContainer,
+                            contentColor = Color.Black
+                        )
+                        ) {
                         Text("Registrarse")
                     }
                 }
