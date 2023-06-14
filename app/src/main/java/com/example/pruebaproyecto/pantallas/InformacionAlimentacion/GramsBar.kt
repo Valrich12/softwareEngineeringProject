@@ -39,13 +39,13 @@ private fun GramsRoundedBar(
        .drawWithCache {
            val brush = Brush.verticalGradient(
                listOf(
-                   Color(0xFF48A231),
-                   Color(0xFF48A231)
+                   md_theme_light_primaryContainer,
+                   md_theme_light_primaryContainer
                )
            )
 
            onDrawBehind {
-               drawRoundRect(brush, cornerRadius = CornerRadius(5.dp.toPx()))
+               drawRoundRect(brush, cornerRadius = CornerRadius(15.dp.toPx()))
            }
        }
        .fillMaxWidth()

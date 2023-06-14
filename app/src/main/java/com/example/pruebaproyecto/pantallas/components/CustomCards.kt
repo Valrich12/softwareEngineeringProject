@@ -38,7 +38,6 @@ fun CustomCards(alimento:Alimento,buttonAction:()-> Unit) {
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text=alimento.nombre,style= MaterialTheme.typography.titleMedium)
-            Text(text=alimento.tipo,style= MaterialTheme.typography.titleSmall)
             Spacer(modifier = Modifier
                 .fillMaxWidth()
                 .height(10.dp))
