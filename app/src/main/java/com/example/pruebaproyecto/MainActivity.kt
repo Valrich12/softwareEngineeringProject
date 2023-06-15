@@ -3,57 +3,185 @@ package com.example.pruebaproyecto
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
-import com.example.pruebaproyecto.pantallas.DatosAlimentacion.IngresoAlimentos
-import com.example.pruebaproyecto.pantallas.DatosAlimentacion.ListaAlimentos
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import com.example.pruebaproyecto.Navigation.Destinations
 import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoDatos
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavScreen
 import com.example.pruebaproyecto.pantallas.login.LoginScreen
+import com.example.pruebaproyecto.pantallas.login.LoginViewModel
 import com.example.pruebaproyecto.pantallas.registro.RegistroScreen
 import com.example.pruebaproyecto.ui.theme.AppTheme
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalAnimationApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //WindowCompat.setDecorFitsSystemWindows(window,false)
         setContent {
             AppTheme{
-              MainNavScreen()
+              val navController = rememberAnimatedNavController()
+
+              BoxWithConstraints() {
+                  AnimatedNavHost(
+                      navController = navController ,
+                      startDestination = Destinations.Login.route
+                  ){
+                        addLogin(navController)
+                        addRegister(navController)
+                        addDatos(navController)
+                        addMain()
+                  }
+              }  
             }
         }
     }
 }
-@Composable
-fun ComponentTest(){
-    FloatingActionButton(
-            modifier = Modifier.size(72.dp),
-            contentColor = MaterialTheme.colorScheme.inversePrimary,
-            onClick = { /*TODO*/ }) {
-        Icon(
-            modifier = Modifier.size(42.dp),
-            imageVector = Icons.Default.ArrowForward,
-            contentDescription = "forward Icon",
 
-        )
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.addLogin(
+    navController: NavController
+){
+    composable(
+        route = Destinations.Login.route,
+        enterTransition = {
+                slideInHorizontally (
+                    initialOffsetX = { 1000 },
+                    animationSpec = tween(500)
+                )
+        },
+        exitTransition = {
+                slideOutHorizontally (
+                    targetOffsetX =  { -1000 },
+                    animationSpec = tween(500)
+                )
+        },
+        popEnterTransition = {
+                slideInHorizontally (
+                initialOffsetX = { -1000 },
+                animationSpec = tween(500))
+        },
+        popExitTransition = {
+                slideOutHorizontally (
+                    targetOffsetX =  { 1000 },
+                    animationSpec = tween(500)
+                )
+        }
+    ){
+        val viewModel:LoginViewModel = hiltViewModel()
+        if(viewModel.state.value.succesLogin){
+            LaunchedEffect(key1 = Unit){
+                navController.navigate(Destinations.MainScreen.route){
+                    popUpTo(Destinations.Login.route){
+                        inclusive = true
+                    }
+                }
+            }
+        }else{
+            LoginScreen(
+                state = viewModel.state.value,
+                onLogin = viewModel::login,
+                onNavigateToRegister = {
+                    navController.navigate(Destinations.Register.route)
+                },
+                onDissmisDialog = viewModel::hideErrorDialog
+            )
+        }
     }
 }
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.addRegister(
+    navController: NavController
+){
+    composable(
+        route = Destinations.Register.route,
+        enterTransition = {
+            slideInHorizontally (
+                initialOffsetX = { 1000 },
+                animationSpec = tween(500)
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally (
+                targetOffsetX =  { -1000 },
+                animationSpec = tween(500)
+            )
+        },
+        popEnterTransition = {
+            slideInHorizontally (
+                initialOffsetX = { -1000 },
+                animationSpec = tween(500))
+        },
+        popExitTransition = {
+            slideOutHorizontally (
+                targetOffsetX =  { 1000 },
+                animationSpec = tween(500)
+            )
+        }
+    ){
+        RegistroScreen()
+    }
+}
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.addDatos(
+    navController: NavController
+){
+    composable(
+        route = Destinations.Datos.route,
+        enterTransition = {
+            slideInHorizontally (
+                initialOffsetX = { 1000 },
+                animationSpec = tween(500)
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally (
+                targetOffsetX =  { -1000 },
+                animationSpec = tween(500)
+            )
+        },
+        popEnterTransition = {
+            slideInHorizontally (
+                initialOffsetX = { -1000 },
+                animationSpec = tween(500))
+        },
+        popExitTransition = {
+            slideOutHorizontally (
+                targetOffsetX =  { 1000 },
+                animationSpec = tween(500)
+            )
+        }
+    ){
+        IngresoDatos()
+    }
+}
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.addMain(
+){
+    composable(
+        route = Destinations.MainScreen.route
+    ){
+        MainNavScreen()
+    }
+}
+
+
+
 @Composable
 @Preview
 fun mainPreview(){
@@ -61,13 +189,7 @@ fun mainPreview(){
         InformacionAlimentacion()
     }
 }
-@Composable
-@Preview
-fun botonPreview(){
-    AppTheme {
-        ComponentTest()
-    }
-}
+
 
 
 

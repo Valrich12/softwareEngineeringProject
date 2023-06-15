@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Visibility
@@ -61,12 +62,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.example.pruebaproyecto.pantallas.components.CustomTextField
+import com.example.pruebaproyecto.pantallas.components.EventDialog
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun LoginScreen(){
+fun LoginScreen(
+    state: LoginState,
+    onLogin: (String,String) -> Unit,
+    onNavigateToRegister: () ->Unit,
+    onDissmisDialog: () -> Unit
+
+){
     val emailValue      = rememberSaveable{ mutableStateOf("") }
     val passwordValue   = rememberSaveable{ mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -162,6 +169,7 @@ fun LoginScreen(){
                                 keyboardActions = KeyboardActions(
                                     onDone =  {
                                         focusManager.clearFocus()
+                                        onLogin(emailValue.value,passwordValue.value)
                                     }
                                 ) ,
                                 imeAction = ImeAction.Done,
@@ -205,25 +213,37 @@ fun LoginScreen(){
                                     verticalArrangement = Arrangement.Center
                                 ) {
                                     TextButton(
-                                        onClick = { /*TODO*/ }
+                                        onClick = {
+                                            onNavigateToRegister()
+                                        }
                                     ) {
                                         Text(text = "Crear una Cuenta")
                                     }
                                 }
                                 Column() {
-                                    FloatingActionButton(
-                                        modifier = Modifier
-                                            .size(70.dp),
-
-                                        onClick = { /*TODO*/ }
-                                    ){
-                                        Icon(
-                                            modifier = Modifier.size(42.dp),
-                                            imageVector = Icons.Default.ArrowForward,
-                                            contentDescription = "forward Icon"
+                                    if(state.displayProgressBar){
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.size(70.dp),
+                                            color = androidx.compose.material.MaterialTheme.colors.primary,
+                                            strokeWidth = 6.dp
                                         )
+                                    }else{
+                                        FloatingActionButton(
+                                            modifier = Modifier
+                                                .size(70.dp),
+                                            onClick = {
+                                                onLogin(emailValue.value,passwordValue.value)
+                                            }
+                                        ){
+                                            Icon(
+                                                modifier = Modifier.size(42.dp),
+                                                imageVector = Icons.Default.ArrowForward,
+                                                contentDescription = "forward Icon"
+                                            )
 
+                                        }
                                     }
+
                                 }
                             }
 
@@ -238,13 +258,12 @@ fun LoginScreen(){
 
             }
         }
+        if(state.errorMessage != ""){
+            EventDialog(
+                errorMessage = state.errorMessage,
+                onDissmis = onDissmisDialog
+            )
+        }
     }
 }
 
-@Composable
-@Preview
-fun loginPreview(){
-    AppTheme {
-        LoginScreen()
-    }
-}

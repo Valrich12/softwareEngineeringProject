@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822382919888",
+    "project_id": "saludate-6cafb",
+    "storage_bucket": "saludate-6cafb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822382919888:android:8ac01c7cd6d8cc4da59ed5",
+        "android_client_info": {
+          "package_name": "com.example.pruebaproyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822382919888-fplobqs67jvgqo0s1eicfdadtldin9j5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZpuDsPkSW-Or0_QfBiAqmGPsiUCzsALw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822382919888-fplobqs67jvgqo0s1eicfdadtldin9j5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
