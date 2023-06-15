@@ -224,7 +224,7 @@ fun LoginScreen(
                                     if(state.displayProgressBar){
                                         CircularProgressIndicator(
                                             modifier = Modifier.size(70.dp),
-                                            color = androidx.compose.material.MaterialTheme.colors.primary,
+                                            color = MaterialTheme.colorScheme.primary,
                                             strokeWidth = 6.dp
                                         )
                                     }else{
@@ -232,6 +232,7 @@ fun LoginScreen(
                                             modifier = Modifier
                                                 .size(70.dp),
                                             onClick = {
+                                                focusManager.clearFocus()
                                                 onLogin(emailValue.value,passwordValue.value)
                                             }
                                         ){
