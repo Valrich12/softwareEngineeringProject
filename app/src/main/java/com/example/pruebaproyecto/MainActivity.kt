@@ -21,6 +21,7 @@ import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavScreen
 import com.example.pruebaproyecto.pantallas.login.LoginScreen
 import com.example.pruebaproyecto.pantallas.login.LoginViewModel
 import com.example.pruebaproyecto.pantallas.registro.RegistroScreen
+import com.example.pruebaproyecto.pantallas.registro.RegistroViewModel
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -134,7 +135,25 @@ fun NavGraphBuilder.addRegister(
             )
         }
     ){
-        RegistroScreen()
+        val viewModel:RegistroViewModel = hiltViewModel()
+            if(viewModel.state.value.succesFirstCheck){
+                viewModel.state.value.succesFirstCheck =false
+                LaunchedEffect(key1 = Unit){
+                    navController.navigate(Destinations.Datos.route)
+                }
+            }else
+            {
+                RegistroScreen(
+                    state = viewModel.state.value,
+                    onNextRegister =
+                    viewModel::registerFirstCheck
+                    ,
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onDissmisDialog = viewModel::hideErrorDialog
+                )
+            }
     }
 }
 @OptIn(ExperimentalAnimationApi::class)

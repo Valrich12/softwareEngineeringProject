@@ -43,7 +43,7 @@ class LoginViewModel: ViewModel() {
                 state.value = state.value.copy(displayProgressBar = false)
                 state.value = state.value.copy(succesLogin = true)
             }catch (e:Exception){
-                errorMessage = "No se pudo realizar el Login" + e.message
+                errorMessage = "No se pudieron verificar tus credenciales o no hay una conexión a internet disponible"
                 state.value = state.value.copy(displayProgressBar = false)
                 state.value = state.value.copy(errorMessage = errorMessage )
             }

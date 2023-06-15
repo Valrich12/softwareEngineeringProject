@@ -41,11 +41,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.pantallas.components.CustomTextField
+import com.example.pruebaproyecto.pantallas.components.EventDialog
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 
 @Composable
-fun RegistroScreen() {
+fun RegistroScreen(
+    state: RegisterState,
+    onNextRegister : (String,String,String,String,String,String) -> Unit,
+    onBack : () -> Unit,
+    onDissmisDialog:() ->Unit
+) {
     val nameValue = remember{mutableStateOf("")}
     val apellidoValue = remember{mutableStateOf("")}
     val domicilioValue = remember{mutableStateOf("")}
@@ -74,7 +80,9 @@ fun RegistroScreen() {
                     verticalAlignment =  Alignment.CenterVertically
              ){
                  IconButton(
-                     onClick = { /*TODO*/ })
+                     onClick = {
+                         onBack()
+                     })
                  {
                      Icon(
                          imageVector = Icons.Default.ArrowBack,
@@ -180,6 +188,7 @@ fun RegistroScreen() {
                         PasswordVisualTransformation()
                     }
                 )
+
                 CustomTextField(
                     textFieldValue = confirmValue,
                     textLabel = "Confirmar Contraseña" ,
@@ -188,6 +197,13 @@ fun RegistroScreen() {
                     keyboardActions = KeyboardActions(
                         onDone =  {
                             focusManager.clearFocus()
+                            onNextRegister(
+                                nameValue.value,
+                                apellidoValue.value,
+                                domicilioValue.value,
+                                correoValue.value,
+                                passwordValue.value,
+                                confirmValue.value)
                         }
                     ) ,
                     imeAction = ImeAction.Done,
@@ -211,40 +227,45 @@ fun RegistroScreen() {
                         VisualTransformation.None
                     }else{
                         PasswordVisualTransformation()
-                    }
+                    },
+                    errorCheck = passwordValue.value != confirmValue.value
                 )
 
             }
                 Column(
                     modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .constrainAs(button) {
-                        top.linkTo(inputs.bottom, margin = 70.dp)
-                    },
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .constrainAs(button) {
+                            top.linkTo(inputs.bottom, margin = 70.dp)
+                        },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Spacer(modifier = Modifier.height(16.dp))
                     ElevatedButton(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                                onNextRegister(
+                                    nameValue.value,
+                                    apellidoValue.value,
+                                    domicilioValue.value,
+                                    correoValue.value,
+                                    passwordValue.value,
+                                    confirmValue.value
+                                )},
                         colors = ButtonDefaults.elevatedButtonColors(
                             containerColor = md_theme_light_primaryContainer,
                             contentColor = Color.Black
                         )
                         ) {
-                        Text("Registrarse")
+                        Text("Siguiente")
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-@Preview
-fun registroPreview(){
-    AppTheme {
-        RegistroScreen()
+    if(state.errorMessage != ""){
+        EventDialog(errorMessage = state.errorMessage, onDissmis = onDissmisDialog)
     }
 }
+

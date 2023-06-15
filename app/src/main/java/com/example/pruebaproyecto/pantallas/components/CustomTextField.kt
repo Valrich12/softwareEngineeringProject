@@ -1,5 +1,8 @@
 package com.example.pruebaproyecto.pantallas.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,6 +25,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.pruebaproyecto.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +41,8 @@ fun CustomTextField(
     imeAction: ImeAction,
     trailingIcon: @Composable()(()-> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    Outline: Boolean = false
+    Outline: Boolean = false,
+    errorCheck : Boolean = false
 ) {
 if (Outline) {
     OutlinedTextField(
@@ -63,29 +68,57 @@ if (Outline) {
         )
     )
 }else{
-    TextField(
-        modifier = modifier.fillMaxWidth(),
-        value = textFieldValue.value.take(maxChar ?: 40),
-        onValueChange = { textFieldValue.value = it },
-        label = { Text(text = textLabel) },
-        placeholder = { Text(text = textPlaceHolder) },
-        trailingIcon = trailingIcon,
-        keyboardOptions = KeyboardOptions(
-            capitalization = capitalization,
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
-        keyboardActions = keyboardActions,
-        visualTransformation = visualTransformation,
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent,
-            textColor = MaterialTheme.colorScheme.secondary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-            unfocusedTrailingIconColor = MaterialTheme.colorScheme.secondary
-        )
-    )
+    if(errorCheck){
+        TextField(
+            modifier = modifier.fillMaxWidth(),
+            value = textFieldValue.value.take(maxChar ?: 40),
+            onValueChange = { textFieldValue.value = it },
+            label = { Text(text = textLabel) },
+            placeholder = { Text(text = textPlaceHolder) },
+            trailingIcon = trailingIcon,
+            keyboardOptions = KeyboardOptions(
+                capitalization = capitalization,
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = keyboardActions,
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.Transparent,
+                focusedLabelColor = MaterialTheme.colorScheme.error,
+                focusedIndicatorColor = MaterialTheme.colorScheme.error,
+                textColor = MaterialTheme.colorScheme.error,
+                unfocusedLabelColor = MaterialTheme.colorScheme.error,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.error,
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.error
+            ),
+            supportingText = {Text(text = "Las contraseñas no coinciden", color = MaterialTheme.colorScheme.error)},
 
+        )
+    }else {
+        TextField(
+            modifier = modifier.fillMaxWidth(),
+            value = textFieldValue.value.take(maxChar ?: 40),
+            onValueChange = { textFieldValue.value = it },
+            label = { Text(text = textLabel) },
+            placeholder = { Text(text = textPlaceHolder) },
+            trailingIcon = trailingIcon,
+            keyboardOptions = KeyboardOptions(
+                capitalization = capitalization,
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = keyboardActions,
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.Transparent,
+                textColor = MaterialTheme.colorScheme.secondary,
+                unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.secondary
+            )
+        )
+    }
 }
 }
 @Preview
@@ -93,16 +126,23 @@ if (Outline) {
 
 fun TextFieldsPreview(){
     var prueba = remember { mutableStateOf("") }
-    CustomTextField(
-        textFieldValue = prueba,
-        textLabel = "Prueba" ,
-        textPlaceHolder = "Prueba",
-        keyboardType = KeyboardType.Text,
-        keyboardActions = KeyboardActions(
-            onDone = null,
-        ),
-        imeAction = ImeAction.Done,
-        Outline = true
-    )
+    AppTheme() {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)){
+            CustomTextField(
+                textFieldValue = prueba,
+                textLabel = "Prueba" ,
+                textPlaceHolder = "Prueba",
+                keyboardType = KeyboardType.Text,
+                keyboardActions = KeyboardActions(
+                    onDone = null,
+                ),
+                imeAction = ImeAction.Done,
+                errorCheck = true
+            )
+        }
+    }
+
 }
 
