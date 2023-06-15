@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -46,14 +47,14 @@ import com.example.pruebaproyecto.ui.theme.AppTheme
 @Composable
 fun IngresoDatos(
     state: IngresoState,
-    onDismissDialog:() -> Unit,
-    onRegister:() -> Unit,
+    onDissmisDialog:() -> Unit,
+    onRegister:(String,String,String,String,String,String,String,String,String) -> Unit,
     onBack:()->Unit,
-    //name:String,
-    //apellido:String,
-    //domicilio:String,
-    //email:String,
-    //password:String
+    name:String,
+    apellido:String,
+    domicilio:String,
+    email:String,
+    password:String
 ) {
 
     val edad = remember { mutableStateOf("") }
@@ -225,26 +226,36 @@ fun IngresoDatos(
                         },
                     contentAlignment = Alignment.CenterEnd
                 ) {
-                    FloatingActionButton(
-                        modifier = Modifier
-                            .size(70.dp),
-
-                        onClick = {
-                            onRegister()
-                        }
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(42.dp),
-                            imageVector = Icons.Default.ArrowForward,
-                            contentDescription = "forward Icon"
+                    if (state.displayProgressBar){
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(70.dp),
+                            color = MaterialTheme.colorScheme.primary,
+                            strokeWidth = 6.dp
                         )
+                    }else{
+                        FloatingActionButton(
+                            modifier = Modifier
+                                .size(70.dp),
 
+                            onClick = {
+                                onRegister(edad.value,estatura.value,peso.value,selectedOption,name,apellido,domicilio,email,password)
+                            }
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(42.dp),
+                                imageVector = Icons.Default.ArrowForward,
+                                contentDescription = "forward Icon"
+                            )
+
+                        }
                     }
+
                 }
+                Text(text = selectedOption)
             }
         }
         if(state.errorMessage != ""){
-            EventDialog(errorMessage = state.errorMessage, onDissmis = onDismissDialog)
+            EventDialog(errorMessage = state.errorMessage, onDissmis = onDissmisDialog)
 
         }
 

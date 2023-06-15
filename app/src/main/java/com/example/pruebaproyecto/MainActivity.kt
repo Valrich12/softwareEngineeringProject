@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.example.pruebaproyecto.Navigation.Destinations
 import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoDatos
+import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoViewModel
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavScreen
 import com.example.pruebaproyecto.pantallas.login.LoginScreen
@@ -200,6 +201,31 @@ fun NavGraphBuilder.addDatos(
         val domicilio = backStackEntry.arguments?.getString("domicilio")?:""
         val email = backStackEntry.arguments?.getString("email")?:""
         val password = backStackEntry.arguments?.getString("password")?:""
+        val viewModel:IngresoViewModel = hiltViewModel()
+        if(viewModel.state.value.succesRegister){
+            LaunchedEffect(key1 = Unit){
+                navController.navigate(Destinations.MainScreen.route){
+                    popUpTo(Destinations.Login.route){
+                        inclusive = true
+                    }
+                }
+            }
+        }else{
+            IngresoDatos(
+                name = name,
+                apellido = apellido,
+                domicilio = domicilio,
+                email = email,
+                password = password,
+                state = viewModel.state.value,
+                onRegister = viewModel::signIn
+                ,
+                onDissmisDialog = viewModel::hideErrorDialog,
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
     }
 }

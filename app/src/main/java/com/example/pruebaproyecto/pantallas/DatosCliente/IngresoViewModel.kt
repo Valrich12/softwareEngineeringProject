@@ -22,33 +22,43 @@ class IngresoViewModel: ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
 
 
-    fun signIn(email:String,password:String)
-    = viewModelScope.launch {
-        var errorMessage = ""
-        if(email.isBlank() || password.isBlank()) {
-            errorMessage="Por favor llene los campos"
-        } else
-            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            errorMessage="El email no esta en un formato correcto"
-        }
-        if (errorMessage != ""){
-            state.value = state.value.copy(errorMessage = errorMessage )
-        }
-        else{
-            try {
-                state.value = state.value.copy(displayProgressBar = true)
-                val result = withContext(Dispatchers.IO){
-                    auth.signInWithEmailAndPassword(email,password).await()
-                }
-                state.value = state.value.copy(displayProgressBar = false)
-                state.value = state.value.copy(succesLogin = true)
-            }catch (e:Exception){
-                errorMessage = "No se pudieron verificar tus credenciales o no hay una conexión a internet disponible"
-                state.value = state.value.copy(displayProgressBar = false)
+    fun signIn(edad:String,
+               estatura:String,
+               peso:String,
+               sexo:String,
+               name:String,
+               apellido:String,
+               domicilio:String,
+               email:String,
+               password:String) =
+        viewModelScope.launch{
+            var errorMessage = ""
+            if(edad.isBlank() || estatura.isBlank()||peso.isBlank()||sexo.isBlank()) {
+                errorMessage="Por favor llene los campos"
+            } else
+                if(edad.toInt()>120 || estatura.toInt()>300||peso.toInt()>500){
+                errorMessage="Por favor introduzca valores validos"
+            }
+            if (errorMessage != ""){
                 state.value = state.value.copy(errorMessage = errorMessage )
             }
-        }
+            else{
+                try {
+                    state.value = state.value.copy(displayProgressBar = true)
+                    val result = withContext(Dispatchers.IO) {
+                        auth.createUserWithEmailAndPassword(email, password).await()
+                    }
+                    // User creation successful
+                    state.value = state.value.copy(displayProgressBar = false)
+                    state.value = state.value.copy(succesRegister = true)
+                } catch (e: Exception) {
+                    // User creation failed
+                    errorMessage = "No se pudieron verificar tus credenciales o no hay una conexión a internet disponible"
+                    state.value = state.value.copy(displayProgressBar = false)
+                    state.value = state.value.copy(errorMessage = errorMessage )
+                }
 
+            }
     }
     fun hideErrorDialog(){
         state.value = state.value.copy(
