@@ -43,11 +43,13 @@ class LoginViewModel: ViewModel() {
                         else{
                             state.value = state.value.copy(displayProgressBar = false)
                             errorMessage = "${task.result}"
+                            state.value = state.value.copy(succesLogin = false)
                         }
                     }
 
             }catch (e:Exception){
                 errorMessage = "${e.message}"
+                state.value = state.value.copy(succesLogin = false)
             }
         }
 
