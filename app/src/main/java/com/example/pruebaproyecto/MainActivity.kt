@@ -136,24 +136,32 @@ fun NavGraphBuilder.addRegister(
         }
     ){
         val viewModel:RegistroViewModel = hiltViewModel()
-            if(viewModel.state.value.succesFirstCheck){
-                viewModel.state.value.succesFirstCheck =false
-                LaunchedEffect(key1 = Unit){
-                    navController.navigate(Destinations.Datos.route)
-                }
-            }else
-            {
-                RegistroScreen(
-                    state = viewModel.state.value,
-                    onNextRegister =
-                    viewModel::registerFirstCheck
-                    ,
-                    onBack = {
-                        navController.popBackStack()
-                    },
-                    onDissmisDialog = viewModel::hideErrorDialog
+        val name        = viewModel.state.value.name
+        val apellido    = viewModel.state.value.apellido
+        val domicilio   = viewModel.state.value.domicilio
+        val email       = viewModel.state.value.email
+        val password    = viewModel.state.value.password
+
+        if(viewModel.state.value.succesFirstCheck){
+            viewModel.state.value.succesFirstCheck =false
+            LaunchedEffect(key1 = Unit){
+                navController.navigate(
+                    Destinations.Datos.route +"/$name"+"/$apellido"+"/$domicilio"+"/$email"+"/$password"
                 )
             }
+        }else
+        {
+            RegistroScreen(
+                state = viewModel.state.value,
+                onNextRegister =
+                viewModel::registerFirstCheck
+                ,
+                onBack = {
+                    navController.popBackStack()
+                },
+                onDissmisDialog = viewModel::hideErrorDialog
+            )
+        }
     }
 }
 @OptIn(ExperimentalAnimationApi::class)
@@ -161,7 +169,8 @@ fun NavGraphBuilder.addDatos(
     navController: NavController
 ){
     composable(
-        route = Destinations.Datos.route,
+        route = Destinations.Datos.route+"/{name}"+"/{apellido}"+"/{domicilio}"+"/{email}"+"/{password}",
+        arguments = Destinations.Datos.arguments,
         enterTransition = {
             slideInHorizontally (
                 initialOffsetX = { 1000 },
@@ -185,8 +194,13 @@ fun NavGraphBuilder.addDatos(
                 animationSpec = tween(500)
             )
         }
-    ){
-        IngresoDatos()
+    ){backStackEntry->
+        val name = backStackEntry.arguments?.getString("name")?:""
+        val apellido = backStackEntry.arguments?.getString("apellido")?:""
+        val domicilio = backStackEntry.arguments?.getString("domicilio")?:""
+        val email = backStackEntry.arguments?.getString("email")?:""
+        val password = backStackEntry.arguments?.getString("password")?:""
+        IngresoDatos(name,email)
     }
 }
 @OptIn(ExperimentalAnimationApi::class)

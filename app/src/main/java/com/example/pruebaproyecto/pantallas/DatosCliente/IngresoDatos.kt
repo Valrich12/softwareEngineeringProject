@@ -43,7 +43,13 @@ import com.example.pruebaproyecto.pantallas.components.CustomTextField
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 @Composable
-fun IngresoDatos() {
+fun IngresoDatos(
+    name:String,
+    //apellido:String,
+    //domicilio:String,
+    email:String,
+    //password:String
+) {
 
     val edad = remember { mutableStateOf("") }
     val estatura = remember { mutableStateOf("") }
@@ -96,9 +102,9 @@ fun IngresoDatos() {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .constrainAs(form){
-                                    top.linkTo(desc.bottom)
-                                    bottom.linkTo(nextButton.top)
+                        .constrainAs(form) {
+                            top.linkTo(desc.bottom)
+                            bottom.linkTo(nextButton.top)
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -201,14 +207,16 @@ fun IngresoDatos() {
                                 }
                             }
                         }
+                        Text(text = name)
+                        Text(text = email)
                     }
 
                 }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .constrainAs(nextButton){
-                                     bottom.linkTo(parent.bottom)
+                        .constrainAs(nextButton) {
+                            bottom.linkTo(parent.bottom)
                         },
                     contentAlignment = Alignment.CenterEnd
                 ) {
@@ -229,12 +237,5 @@ fun IngresoDatos() {
             }
         }
 
-    }
-}
-@Composable
-@Preview
-fun DatosPreview(){
-    AppTheme {
-        IngresoDatos()
     }
 }

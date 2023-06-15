@@ -10,10 +10,10 @@ class RegistroViewModel: ViewModel() {
 
     var state: MutableState<RegisterState> = mutableStateOf(RegisterState())
 
-    fun registerFirstCheck(name:String,appellido:String,domicilio:String,email:String,password:String,confirmPass:String)
+    fun registerFirstCheck(name:String,apellido:String,domicilio:String,email:String,password:String,confirmPass:String)
         {
             var errorMessage = ""
-            if(name.isBlank()||appellido.isBlank()||domicilio.isBlank()||email.isBlank() || password.isBlank()||confirmPass.isBlank()) {
+            if(name.isBlank()||apellido.isBlank()||domicilio.isBlank()||email.isBlank() || password.isBlank()||confirmPass.isBlank()) {
                 errorMessage="Por favor llene todos los campos"
             } else
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -25,6 +25,7 @@ class RegistroViewModel: ViewModel() {
             if (errorMessage != ""){
                 state.value = state.value.copy(errorMessage = errorMessage )
             }else{
+                state.value = state.value.copy(name = name, apellido=apellido, domicilio = domicilio,email=email,password=password)
                 state.value = state.value.copy(succesFirstCheck = true)
             }
         }
