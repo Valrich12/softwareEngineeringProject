@@ -200,7 +200,7 @@ fun NavGraphBuilder.addDatos(
         val domicilio = backStackEntry.arguments?.getString("domicilio")?:""
         val email = backStackEntry.arguments?.getString("email")?:""
         val password = backStackEntry.arguments?.getString("password")?:""
-        IngresoDatos(name,email)
+
     }
 }
 @OptIn(ExperimentalAnimationApi::class)

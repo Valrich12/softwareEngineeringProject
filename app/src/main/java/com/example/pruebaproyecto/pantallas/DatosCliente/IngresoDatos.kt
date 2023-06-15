@@ -40,14 +40,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.pantallas.components.CustomTextField
+import com.example.pruebaproyecto.pantallas.components.EventDialog
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 @Composable
 fun IngresoDatos(
-    name:String,
+    state: IngresoState,
+    onDismissDialog:() -> Unit,
+    onRegister:() -> Unit,
+    onBack:()->Unit,
+    //name:String,
     //apellido:String,
     //domicilio:String,
-    email:String,
+    //email:String,
     //password:String
 ) {
 
@@ -74,7 +79,9 @@ fun IngresoDatos(
                     modifier = Modifier.constrainAs(titulo){}
                 ) {
                     IconButton(
-                        onClick = { /*TODO*/ })
+                        onClick = {
+                            onBack()
+                        })
                     {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -207,8 +214,6 @@ fun IngresoDatos(
                                 }
                             }
                         }
-                        Text(text = name)
-                        Text(text = email)
                     }
 
                 }
@@ -224,7 +229,9 @@ fun IngresoDatos(
                         modifier = Modifier
                             .size(70.dp),
 
-                        onClick = { /*TODO*/ }
+                        onClick = {
+                            onRegister()
+                        }
                     ) {
                         Icon(
                             modifier = Modifier.size(42.dp),
@@ -235,6 +242,10 @@ fun IngresoDatos(
                     }
                 }
             }
+        }
+        if(state.errorMessage != ""){
+            EventDialog(errorMessage = state.errorMessage, onDissmis = onDismissDialog)
+
         }
 
     }
