@@ -9,7 +9,10 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class LoginViewModel: ViewModel() {
@@ -34,22 +37,15 @@ class LoginViewModel: ViewModel() {
         else{
             try {
                 state.value = state.value.copy(displayProgressBar = true)
-                auth.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener{task ->
-                        if (task.isSuccessful){
-                            state.value = state.value.copy(displayProgressBar = false)
-                            state.value = state.value.copy(succesLogin = true)
-                        }
-                        else{
-                            state.value = state.value.copy(displayProgressBar = false)
-                            errorMessage = "${task.result}"
-                            state.value = state.value.copy(succesLogin = false)
-                        }
-                    }
-
+                val result = withContext(Dispatchers.IO){
+                    auth.signInWithEmailAndPassword(email,password).await()
+                }
+                state.value = state.value.copy(displayProgressBar = false)
+                state.value = state.value.copy(succesLogin = true)
             }catch (e:Exception){
-                errorMessage = "${e.message}"
-                state.value = state.value.copy(succesLogin = false)
+                errorMessage = "No se pudo realizar el Login" + e.message
+                state.value = state.value.copy(displayProgressBar = false)
+                state.value = state.value.copy(errorMessage = errorMessage )
             }
         }
 
