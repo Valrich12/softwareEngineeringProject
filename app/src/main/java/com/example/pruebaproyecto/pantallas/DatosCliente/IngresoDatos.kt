@@ -251,7 +251,6 @@ fun IngresoDatos(
                     }
 
                 }
-
             }
         }
         if(state.errorMessage != ""){
