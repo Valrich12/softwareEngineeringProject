@@ -251,7 +251,6 @@ fun IngresoDatos(
                     }
 
                 }
-                Text(text = selectedOption)
             }
         }
         if(state.errorMessage != ""){
