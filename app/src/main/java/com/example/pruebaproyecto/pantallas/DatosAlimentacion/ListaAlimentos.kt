@@ -31,62 +31,71 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pruebaproyecto.clases.Alimento
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 var selectedItems =  mutableListOf<String>()
-var tiposAlimento : HashMap<String, MutableList<Alimento>> = HashMap()
+var tiposAlimento : HashMap<String, MutableList<Alimento>> = hashMapOf(
+    "Alimentos Solidos" to mutableListOf<Alimento>(),
+    "Caldos" to mutableListOf<Alimento>()
+)
 
 fun recibirAlimentos(){
+    /*
+        Idea
+
+        Reicibir alimentos
+
+        alimentos.foreach(){ alimento ->
+
+            if(!tiposAlimentos.contains(alimento.tipo)
+                {
+                    tiposAlimento.put(alimento.tipo,mutableListOf()
+                    tiposAlimento.get(alimento.tipo)?.add(alimento)
+            }
+            else{
+                tiposAlimento.get(alimento6.tipo)?.add(alimento)
+            }
+
+        }
+
+
+     */
     //var tiposAlimentos = mutableListOf<MutableList<Alimento>>()
-    var alimento1 = Alimento("Manzana","Frutas")
-    var alimento2 = Alimento("Zanahoria","Verduras")
-    var alimento3 = Alimento("Maiz","Cereales")
-    var alimento4 = Alimento("Fresa","Frutas")
-    var alimento5 = Alimento("Tomate","Verduras")
-    var alimento6 = Alimento("Arroz","Cereales")
-    var alimentoP = Alimento("Raiz","Cereales")
-    val frutas = mutableListOf<Alimento>(alimento1,alimento4)
-    val verduras = mutableListOf<Alimento>(alimento2,alimento5)
-    val cereales = mutableListOf<Alimento>(alimento3,alimento6)
-    val raices = mutableListOf<Alimento>(alimentoP)
+    var alimento1 = Alimento("Alambre","Alimentos Solidos")
+    var alimento2 = Alimento("Albóndigas","Alimentos Solidos")
+    var alimento3 = Alimento("Alitas","Alimentos Solidos")
+    var alimento4 = Alimento("Arroz","Alimentos Solidos")
+    var alimento5 = Alimento("Bistec","Alimentos Solidos")
+    var alimento6 = Alimento("Burritos","Alimentos Solidos")
+    var alimento7 = Alimento("Carne Asada","Alimentos Solidos")
+    var alimento8 = Alimento("Carne de cerdo","Alimentos Solidos")
+    var alimento9 = Alimento("Carne de Res","Alimentos Solidos")
+    var alimento10 = Alimento("Chilaquiles","Alimentos Solidos")
+    var alimento11 = Alimento("Chiles Rellenos","Alimentos Solidos")
+    var alimento12 = Alimento("Sushi","Alimentos Solidos")
+    var alimento13 = Alimento("Tacos","Alimentos Solidos")
+    var alimento14 = Alimento("Tamales","Alimentos Solidos")
+    var alimento15 = Alimento("Tlacoyos","Alimentos Solidos")
+    var alimento16 = Alimento("Tlayuda","Alimentos Solidos")
+    var alimento17 = Alimento("Torta","Alimentos Solidos")
+    var alimento18 = Alimento("Tostadas","Alimentos Solidos")
+    var alimento19 = Alimento("Quesadillas","Alimentos Solidos")
+    var alimento20 = Alimento("Sandwich","Alimentos Solidos")
 
 
-    tiposAlimento.put(alimento1.tipo, frutas)
-    tiposAlimento.put(alimento2.tipo, verduras)
-    tiposAlimento.put(alimento3.tipo, cereales)
-    tiposAlimento.put("Raices",raices)
 
-    var alimento7 = Alimento("Pera","Frutas")
-    var alimento8 = Alimento("Platano","Frutas")
-    var alimento9 = Alimento("alimento9","Frutas")
-    var alimento10 = Alimento("alimento10","Frutas")
-    var alimento11 = Alimento("alimento11","Frutas")
-    var alimento12 = Alimento("alimento12","Frutas")
-    var alimento13 = Alimento("alimento13","Frutas")
-    var alimento14 = Alimento("alimento14","Frutas")
-    var alimento15 = Alimento("alimento15","Frutas")
-    var alimento16 = Alimento("alimento16","Frutas")
-    var alimento17 = Alimento("alimento17","Frutas")
-    var alimento18 = Alimento("alimento18 ","Frutas")
-    var alimento19 = Alimento("alimento19","Frutas")
-    var alimento20 = Alimento("alimento20","Frutas")
-    var alimento21 = Alimento("alimento21","Frutas")
-    var alimento22 = Alimento("alimento22","Frutas")
-    var alimento23 = Alimento("alimento23","Frutas")
-    var alimento24 = Alimento("alimento24","Frutas")
-    var alimento25 = Alimento("alimento25","Frutas")
-    var alimento26 = Alimento("alimento26","Frutas")
-    var alimento27 = Alimento("alimento27","Frutas")
-    var alimento28 = Alimento("alimento28 ","Frutas")
-    var alimento29 = Alimento("alimento29","Frutas")
-    var alimento30 = Alimento("alimento30","Frutas")
-    var alimento31 = Alimento("alimento31","Frutas")
-    var alimento32 = Alimento("alimento32","Frutas")
-
+    tiposAlimento.get(alimento1.tipo)?.add(alimento1)
+    tiposAlimento.get(alimento2.tipo)?.add(alimento2)
+    tiposAlimento.get(alimento3.tipo)?.add(alimento3)
+    tiposAlimento.get(alimento4.tipo)?.add(alimento4)
+    tiposAlimento.get(alimento5.tipo)?.add(alimento5)
+    tiposAlimento.get(alimento6.tipo)?.add(alimento6)
     tiposAlimento.get(alimento7.tipo)?.add(alimento7)
     tiposAlimento.get(alimento8.tipo)?.add(alimento8)
     tiposAlimento.get(alimento9.tipo)?.add(alimento9)
@@ -101,18 +110,26 @@ fun recibirAlimentos(){
     tiposAlimento.get(alimento18.tipo)?.add(alimento18)
     tiposAlimento.get(alimento19.tipo)?.add(alimento19)
     tiposAlimento.get(alimento20.tipo)?.add(alimento20)
-    tiposAlimento.get(alimento21.tipo)?.add(alimento21)
+
+
+
+
+
+
+    var alimento21 = Alimento("Caldo de Camaron","Caldos")
+    var alimento22 = Alimento("Caldo de Pollo","Caldos")
+    var alimento23 = Alimento("Caldo de Res","Caldos")
+    var alimento24 = Alimento("Crema de Elote","Caldos")
+    var alimento25 = Alimento("Pozole de Cerdo","Caldos")
+    var alimento26 = Alimento("Pozole de Porllo","Caldos")
+    var alimento27 = Alimento("Sopa","Caldos")
+
     tiposAlimento.get(alimento22.tipo)?.add(alimento22)
     tiposAlimento.get(alimento23.tipo)?.add(alimento23)
     tiposAlimento.get(alimento24.tipo)?.add(alimento24)
     tiposAlimento.get(alimento25.tipo)?.add(alimento25)
     tiposAlimento.get(alimento26.tipo)?.add(alimento26)
     tiposAlimento.get(alimento27.tipo)?.add(alimento27)
-    tiposAlimento.get(alimento28.tipo)?.add(alimento28)
-    tiposAlimento.get(alimento29.tipo)?.add(alimento29)
-    tiposAlimento.get(alimento30.tipo)?.add(alimento30)
-    tiposAlimento.get(alimento31.tipo)?.add(alimento31)
-    tiposAlimento.get(alimento32.tipo)?.add(alimento32)
 
 }
 
@@ -179,12 +196,16 @@ fun ListaAlimentos() {
                                 while (countRow > 0 && itemsLeft >= 0) {
                                     var isSelected by remember { mutableStateOf(false) }
                                     Box(
-                                        modifier = Modifier.width(122.dp),
+                                        modifier = Modifier.width(118.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         var name = key.value[itemsCount].nombre
                                         isSelected = selectedItems.contains(name)
                                         FilterChip(
+                                            modifier = Modifier
+                                                .width(118.dp)
+                                                .height(50.dp)
+                                                .padding(2.dp),
                                             selected = isSelected,
                                             onClick = {
                                                 isSelected = !isSelected
@@ -194,7 +215,9 @@ fun ListaAlimentos() {
                                                     selectedItems.remove(name)
                                                 }
                                             },
-                                            label = { Text(text = key.value[itemsCount].nombre) },
+                                            label = {
+                                                Text(text = key.value[itemsCount].nombre)
+                                            },
                                             leadingIcon = if (isSelected) {
                                                 {
                                                     Icon(
@@ -208,6 +231,7 @@ fun ListaAlimentos() {
                                             }
                                         )
                                     }
+
                                     countRow--
                                     itemsLeft--
                                     itemsCount++
@@ -235,6 +259,9 @@ fun ListaAlimentos() {
 
                         }
                     }
+                }
+                item {
+                    Spacer(modifier = Modifier.fillMaxWidth().height(15.dp))
                 }
             }
         }

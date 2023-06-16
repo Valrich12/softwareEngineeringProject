@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.example.pruebaproyecto.Navigation.Destinations
+import com.example.pruebaproyecto.pantallas.DatosAlimentacion.ListaAlimentos
 import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoDatos
 import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoViewModel
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
