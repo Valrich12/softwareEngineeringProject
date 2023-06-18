@@ -87,7 +87,7 @@ fun NavGraphBuilder.addLogin(
         }
     ){
         val viewModel:LoginViewModel = hiltViewModel()
-        if(viewModel.state.value.succesLogin){
+        if(viewModel.state.value.succesLogin || viewModel.auth.currentUser!=null){
             LaunchedEffect(key1 = Unit){
                 navController.navigate(Destinations.MainScreen.route){
                     popUpTo(Destinations.Login.route){

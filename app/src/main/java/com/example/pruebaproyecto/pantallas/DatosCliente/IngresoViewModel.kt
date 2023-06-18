@@ -44,9 +44,13 @@ class IngresoViewModel: ViewModel() {
             }
             else{
                 try {
+                    //Creamos el usueario y despues lo loggeamos
                     state.value = state.value.copy(displayProgressBar = true)
                     val result = withContext(Dispatchers.IO) {
                         auth.createUserWithEmailAndPassword(email, password).await()
+                    }
+                    val result2 = withContext(Dispatchers.IO){
+                        auth.signInWithEmailAndPassword(email,password).await()
                     }
                     // User creation successful
                     state.value = state.value.copy(displayProgressBar = false)

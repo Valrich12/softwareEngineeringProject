@@ -19,8 +19,7 @@ class LoginViewModel: ViewModel() {
 
     val state: MutableState<LoginState> = mutableStateOf(LoginState())
 
-    private val auth: FirebaseAuth = Firebase.auth
-
+    val auth: FirebaseAuth = Firebase.auth
 
     fun login(email:String,password:String)
     = viewModelScope.launch {
