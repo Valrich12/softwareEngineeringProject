@@ -48,7 +48,7 @@ import com.example.pruebaproyecto.ui.theme.AppTheme
 fun IngresoDatos(
     state: IngresoState,
     onDissmisDialog:() -> Unit,
-    onRegister:(String,String,String,String,String,String,String,String,String) -> Unit,
+    onRegister:(String,String,String,String,String,String,String,String,String,String) -> Unit,
     onBack:()->Unit,
     name:String,
     apellido:String,
@@ -60,8 +60,13 @@ fun IngresoDatos(
     val edad = remember { mutableStateOf("") }
     val estatura = remember { mutableStateOf("") }
     val peso = remember{ mutableStateOf("") }
+
     val radioOptions = listOf("Masculino", "Femenino")
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+
+    val radioOptions2 = listOf("Mantener","Bajar","Aumentar")
+    val (selectedOption2, onOptionSelected2) = remember { mutableStateOf(radioOptions2[0]) }
+
     val focusManager = LocalFocusManager.current
     Box(
         modifier = Modifier
@@ -203,7 +208,7 @@ fun IngresoDatos(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     RadioButton(
-                                        selected = (text == selectedOption),
+                                        selected = (text == selectedOption2),
                                         onClick = null // null recommended for accessibility with screenreaders
                                     )
                                     Text(
@@ -211,6 +216,40 @@ fun IngresoDatos(
                                         style = MaterialTheme.typography.bodyLarge,
                                         color = MaterialTheme.colorScheme.onBackground,
                                         modifier = Modifier.padding(start = 16.dp)
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.fillMaxWidth().height(50.dp))
+                        Text(
+                            text = "¿Qué es lo que desea lograr?",
+                            style = MaterialTheme.typography.headlineSmall.copy(
+                                fontWeight = FontWeight.Light
+                            ),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Column(Modifier.selectableGroup()) {
+                            radioOptions2.forEach { text ->
+                                Row(
+                                    Modifier
+                                        .height(56.dp)
+                                        .selectable(
+                                            selected = (text == selectedOption2),
+                                            onClick = { onOptionSelected2(text) },
+                                            role = Role.RadioButton
+                                        )
+                                        .padding(horizontal = 16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    RadioButton(
+                                        selected = (text == selectedOption2),
+                                        onClick = null // null recommended for accessibility with screenreaders
+                                    )
+                                    Text(
+                                        text = text+" Peso",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                        modifier = Modifier
                                     )
                                 }
                             }
@@ -238,7 +277,7 @@ fun IngresoDatos(
                                 .size(70.dp),
 
                             onClick = {
-                                onRegister(edad.value,estatura.value,peso.value,selectedOption,name,apellido,domicilio,email,password)
+                                onRegister(edad.value,estatura.value,peso.value,selectedOption,selectedOption2,name,apellido,domicilio,email,password)
                             }
                         ) {
                             Icon(
