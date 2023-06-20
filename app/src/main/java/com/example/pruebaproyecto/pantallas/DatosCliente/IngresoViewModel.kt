@@ -31,7 +31,7 @@ class IngresoViewModel
 
     val state: MutableState<IngresoState> = mutableStateOf(IngresoState())
 
-    private val auth = Firebase.auth
+    val auth: FirebaseAuth = Firebase.auth
 
 
     fun signIn(edad:String,

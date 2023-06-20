@@ -1,8 +1,13 @@
 package com.example.pruebaproyecto.Repositories
 
+
 import com.example.pruebaproyecto.clases.ClientData
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
+
+
 
 import javax.inject.Inject
 import javax.inject.Named
@@ -24,20 +29,21 @@ constructor(
         }
     }
 
-    fun getClientData(clientId:String):ClientData{
-
+    fun getClientData(clientId:String):Flow<ResultClientData<ClientData>> = flow{
         try {
-            var clientData = ClientData()
-            clientDataList.document("3Fj1CiTWPRZsum8cFKgblsLQbZK2_Data").get().addOnSuccessListener { documentSnapshot ->
-                 clientData = documentSnapshot.toObject<ClientData>()!!
-            }
-            return  clientData
+            emit(ResultClientData.Loading())
+            val clientData = clientDataList.document(clientId+"_Data").get().await()
+            val clientDataOb = clientData.toObject(ClientData::class.java)
+            emit(ResultClientData.Success(data = clientDataOb))
 
-        }catch (e:Exception){
-            e.printStackTrace()
-            return ClientData()
+        }catch (e: Exception){
+            emit(ResultClientData.Error(message = e.localizedMessage?:"Error Desconocido"))
         }
+
+
     }
+
+
 
 
 }

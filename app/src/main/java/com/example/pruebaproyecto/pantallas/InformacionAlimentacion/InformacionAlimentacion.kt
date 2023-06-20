@@ -27,11 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.clases.ClientData
 import com.example.pruebaproyecto.clases.InfoAlimentacion
+import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 
 @Composable
-fun InformacionAlimentacion(clientData: ClientData) {
+fun InformacionAlimentacion(state:MainNavState) {
 
     Box(
         modifier = Modifier
@@ -65,7 +66,7 @@ fun InformacionAlimentacion(clientData: ClientData) {
                                 start.linkTo(parent.start, margin = 30.dp)
                             },
                     ) {
-                        InformacionEnergiaGraph(clientData = clientData)
+                        InformacionEnergiaGraph(clientData = state.clientData)
                     }
                     Box(
                         modifier = Modifier
@@ -82,7 +83,7 @@ fun InformacionAlimentacion(clientData: ClientData) {
                                 top.linkTo(graphEner.bottom, margin = 20.dp)
                                 start.linkTo(parent.start, margin = 30.dp)
                             }) {
-                        InformacionProteinaGraph(clientData = clientData)
+                        InformacionProteinaGraph(clientData = state.clientData)
                     }
                     Box(
                         modifier = Modifier
@@ -99,7 +100,7 @@ fun InformacionAlimentacion(clientData: ClientData) {
                                 top.linkTo(graphProt.bottom, margin = 20.dp)
                                 start.linkTo(parent.start, margin = 30.dp)
                             }) {
-                        InformacionGrasaGraph(clientData = clientData)
+                        InformacionGrasaGraph(clientData = state.clientData)
                     }
 
                 }
@@ -116,7 +117,7 @@ private fun InformacionEnergiaGraph (
 ) {
     val cantidadesBar = listOf<Float>(fakeDataEnergia.cantidadActual,clientData.carbs )
     val labels = listOf<String>(fakeDataEnergia.tipoMacro+" Actuales", fakeDataEnergia.tipoMacro +" Recomendados")
-    val cantidades = listOf<Int>(400,800,1200,1600,2000,2400,2800,3200)
+    val cantidades = listOf<Int>(100,200,300,400,500,600,700)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
         nutrCounts = 2,
@@ -128,7 +129,7 @@ private fun InformacionEnergiaGraph (
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .gramsGraphBar(
-                        cantidad = cantidadesBar[index] / 3200f
+                        cantidad = cantidadesBar[index] / 700f
                     )
             )
         }
@@ -144,7 +145,7 @@ private fun InformacionProteinaGraph (
 ) {
     val cantidadesBar = listOf<Float>(fakeDataProteina.cantidadActual, clientData.proteinas)
     val labels = listOf<String>(fakeDataProteina.tipoMacro+" \nActual", fakeDataProteina.tipoMacro +" Recomendada")
-    val cantidades = listOf<Int>(20,40,60,80,100,120,140)
+    val cantidades = listOf<Int>(30,60,90,120,150,180,210)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
         nutrCounts = 2,
@@ -156,7 +157,7 @@ private fun InformacionProteinaGraph (
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .gramsGraphBar(
-                        cantidad = cantidadesBar[index] / 140f
+                        cantidad = cantidadesBar[index] / 210f
                     )
             )
         }
@@ -172,7 +173,7 @@ private fun InformacionGrasaGraph (
 ) {
     val cantidadesBar = listOf<Float>(fakeDataGrasa.cantidadActual, clientData.grasas)
     val labels = listOf<String>(fakeDataGrasa.tipoMacro+" \nActual", fakeDataGrasa.tipoMacro +" Recomendada")
-    val cantidades = listOf<Int>(20,40,60,80,100,120,140)
+    val cantidades = listOf<Int>(30,60,90,120,150,180,210)
     InfoGrafica(
         grHeader ={CantidadHeader(cantidades)},
         nutrCounts = 2,
@@ -184,7 +185,7 @@ private fun InformacionGrasaGraph (
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .gramsGraphBar(
-                        cantidad = cantidadesBar[index] / 140f
+                        cantidad = cantidadesBar[index] / 210f
                     )
             )
         }
@@ -247,7 +248,7 @@ private fun CantidadHeader(cantidades:List<Int>){
 
 
 
-val fakeDataEnergia = InfoAlimentacion("Carbohidratos",900f,1600f)
+val fakeDataEnergia = InfoAlimentacion("Carbohidratos",150f,1600f)
 
 val fakeDataProteina = InfoAlimentacion("Proteina",100f,73f)
 

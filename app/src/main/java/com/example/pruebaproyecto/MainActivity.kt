@@ -238,7 +238,8 @@ fun NavGraphBuilder.addMain(
         route = Destinations.MainScreen.route
     ){
         val viewModel:MainNavViewModel = hiltViewModel()
-        MainNavScreen(viewModel.state.value)
+        val state = viewModel.state.value
+        MainNavScreen(state = state)
     }
 }
 
