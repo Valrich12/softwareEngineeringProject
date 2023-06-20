@@ -172,7 +172,7 @@ fun ListaAlimentos() {
             }
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "Selecciona los alimentos que consumes con regularidad",
+                text = "Selecciona los alimentos que consumas",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Light
                 ),
@@ -270,13 +270,6 @@ fun ListaAlimentos() {
 
 }
 
-@Preview
-@Composable
-fun previewLista() {
-    AppTheme {
-        ListaAlimentos()
-    }
-}
 
 
 
