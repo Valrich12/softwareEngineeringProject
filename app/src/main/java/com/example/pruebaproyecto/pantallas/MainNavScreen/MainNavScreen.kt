@@ -46,8 +46,8 @@ fun MainNavScreen(
 
     val scope = rememberCoroutineScope()
     val tabs = listOf(
-        TabItem("Recomendaciones", {Recomendaciones()}),
-        TabItem("Ingreso de Alimentos", {IngresoAlimentos()}),
+        TabItem("Recomendaciones", {Recomendaciones(state)}),
+        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state)}),
         TabItem("Seguimiento", {InformacionAlimentacion(state)}),
     )
     var pagerState = rememberPagerState()

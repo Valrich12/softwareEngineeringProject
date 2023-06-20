@@ -32,13 +32,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import com.example.pruebaproyecto.ui.theme.md_theme_light_onSurface
 import com.example.pruebaproyecto.ui.theme.md_theme_light_outline
 import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 
 @Composable
-fun IngresoAlimentos() {
+fun IngresoAlimentos(
+    state:MainNavState
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background) ){
@@ -232,10 +235,3 @@ val alimentos = mutableListOf(
 
 
 
-@Preview
-@Composable
-fun IngresoAlimentosPreview() {
-    AppTheme {
-        IngresoAlimentos()
-    }
-}

@@ -20,11 +20,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.pantallas.components.CustomCards
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 @Composable
-fun Recomendaciones() {
+fun Recomendaciones(
+    state:MainNavState
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background))
@@ -38,7 +41,7 @@ fun Recomendaciones() {
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    recomendacionesDesayuno.forEach(){alimento ->
+                    state.listAlimentos.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -59,7 +62,7 @@ fun Recomendaciones() {
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    recomendacionesDesayuno.forEach(){alimento ->
+                    state.listAlimentos.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -80,7 +83,7 @@ fun Recomendaciones() {
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    recomendacionesDesayuno.forEach(){alimento ->
+                    state.listAlimentos.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -101,7 +104,7 @@ fun Recomendaciones() {
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    recomendacionesDesayuno.forEach(){alimento ->
+                    state.listAlimentos.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -122,7 +125,7 @@ fun Recomendaciones() {
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    recomendacionesDesayuno.forEach(){alimento ->
+                    state.listAlimentos.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -146,18 +149,5 @@ fun Recomendaciones() {
     }
 }
 
-@Preview
-@Composable
-fun RecomendacionePreview() {
-    AppTheme {
-        Recomendaciones()
-    }
-}
 
-val recomendacionesDesayuno = listOf(
-    Alimento("Huevos","Alimento Solido",12,10,12),
-    Alimento("Hamburguesa","Alimento Solido",12,10,12),
-    Alimento("Molletes","Alimento Solido",12,10,12),
-    Alimento("Pechuga Asada","Alimento Solido",12,10,12),
-    Alimento("Picadillo","Alimento Solido",12,10,12)
-)
+
