@@ -20,6 +20,7 @@ import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoDatos
 import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoViewModel
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavScreen
+import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavViewModel
 import com.example.pruebaproyecto.pantallas.login.LoginScreen
 import com.example.pruebaproyecto.pantallas.login.LoginViewModel
 import com.example.pruebaproyecto.pantallas.registro.RegistroScreen
@@ -236,19 +237,13 @@ fun NavGraphBuilder.addMain(
     composable(
         route = Destinations.MainScreen.route
     ){
-        MainNavScreen()
+        val viewModel:MainNavViewModel = hiltViewModel()
+        MainNavScreen(viewModel.state.value)
     }
 }
 
 
 
-@Composable
-@Preview
-fun mainPreview(){
-    AppTheme {
-        InformacionAlimentacion()
-    }
-}
 
 
 

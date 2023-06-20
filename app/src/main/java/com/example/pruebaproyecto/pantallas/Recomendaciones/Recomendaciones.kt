@@ -42,7 +42,9 @@ fun Recomendaciones() {
                         item {
                             CustomCards(alimento = alimento) {
                             }
-                            Spacer(modifier = Modifier.fillMaxHeight().width(20.dp))
+                            Spacer(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(20.dp))
                         }    
                         
                     }
@@ -61,7 +63,9 @@ fun Recomendaciones() {
                         item {
                             CustomCards(alimento = alimento) {
                             }
-                            Spacer(modifier = Modifier.fillMaxHeight().width(20.dp))
+                            Spacer(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(20.dp))
                         }
 
                     }
@@ -80,7 +84,9 @@ fun Recomendaciones() {
                         item {
                             CustomCards(alimento = alimento) {
                             }
-                            Spacer(modifier = Modifier.fillMaxHeight().width(20.dp))
+                            Spacer(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(20.dp))
                         }
 
                     }
@@ -99,7 +105,9 @@ fun Recomendaciones() {
                         item {
                             CustomCards(alimento = alimento) {
                             }
-                            Spacer(modifier = Modifier.fillMaxHeight().width(20.dp))
+                            Spacer(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(20.dp))
                         }
 
                     }
@@ -118,7 +126,9 @@ fun Recomendaciones() {
                         item {
                             CustomCards(alimento = alimento) {
                             }
-                            Spacer(modifier = Modifier.fillMaxHeight().width(20.dp))
+                            Spacer(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(20.dp))
                         }
 
                     }
@@ -127,7 +137,9 @@ fun Recomendaciones() {
                     .fillMaxWidth()
                     .height(25.dp))
             }
-
+            item { 
+                Spacer(modifier = Modifier.fillMaxWidth().height(120.dp))
+            }
 
         }
 

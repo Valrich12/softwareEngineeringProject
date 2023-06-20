@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pruebaproyecto.Repositories.clientRepository
 import com.example.pruebaproyecto.clases.ClientData
+import com.example.pruebaproyecto.clases.Recomendation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -17,17 +18,20 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Named
+
+
 @HiltViewModel
 class IngresoViewModel
     @Inject
     constructor(
-        private val clientRepository: clientRepository
+        private val clientRepository: clientRepository,
     )
     : ViewModel() {
 
     val state: MutableState<IngresoState> = mutableStateOf(IngresoState())
 
-    private val auth: FirebaseAuth = Firebase.auth
+    private val auth = Firebase.auth
 
 
     fun signIn(edad:String,
@@ -62,6 +66,8 @@ class IngresoViewModel
                     val result2 = withContext(Dispatchers.IO){
                         auth.signInWithEmailAndPassword(email,password).await()
                     }
+                    auth.uid?.let { addClientData(it,edad.toFloat(),estatura.toFloat(),peso.toFloat(),sexo,opcion,name,apellido) }
+
 
                     state.value = state.value.copy(displayProgressBar = false)
                     state.value = state.value.copy(succesRegister = true)
@@ -90,6 +96,9 @@ class IngresoViewModel
         name:String,
         apellido:String,
     ){
+        val recomendation = Recomendation(clientId)
+        recomendation.createRecomendation(edad,sexo,peso,estatura,opcion)
+
         val clientData = ClientData(
             clientId,
             edad,
@@ -99,10 +108,11 @@ class IngresoViewModel
             opcion,
             name,
             apellido,
-            0.0f,
-            0.0f,
-            0.0f,
+            recomendation.carbs,
+            recomendation.grasa,
+            recomendation.proteina,
         )
+        clientRepository.addClientData(clientData)
     }
 
 

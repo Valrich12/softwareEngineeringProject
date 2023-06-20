@@ -1,11 +1,14 @@
 package com.example.pruebaproyecto.DI
 
+
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -18,6 +21,7 @@ object AppModule {
 
     @Provides
     @Singleton
+    @Named("clientData")
     fun provideClientDataList(
         firestore: FirebaseFirestore
     ) = firestore.collection("clientData")

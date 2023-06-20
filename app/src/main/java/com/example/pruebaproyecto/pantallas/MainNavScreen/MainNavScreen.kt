@@ -34,6 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.R
+import com.example.pruebaproyecto.pantallas.DatosAlimentacion.IngresoAlimentos
+import com.example.pruebaproyecto.pantallas.DatosCliente.IngresoViewModel
+import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
+import com.example.pruebaproyecto.pantallas.Recomendaciones.Recomendaciones
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -41,14 +45,16 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainNavScreen() {
+fun MainNavScreen(
+    state: MainNavState
+) {
 
 
     val scope = rememberCoroutineScope()
     val tabs = listOf(
-        TabItem.Recomendaciones,
-        TabItem.IngresoAlimentos,
-        TabItem.Graficas,
+        TabItem("Recomendaciones", {Recomendaciones()}),
+        TabItem("Ingreso de Alimentos", {IngresoAlimentos()}),
+        TabItem("Seguimiento", {InformacionAlimentacion(state.clientData)}),
     )
     var pagerState = rememberPagerState()
     Box(modifier = Modifier
@@ -149,11 +155,3 @@ fun TabsContent(tabs : List<TabItem>, pagerState: PagerState, modifier: Modifier
     
 }
 
-@Preview
-@Composable
-
-fun MainScreenPreview(){
-    AppTheme {
-        MainNavScreen()
-    }
-}

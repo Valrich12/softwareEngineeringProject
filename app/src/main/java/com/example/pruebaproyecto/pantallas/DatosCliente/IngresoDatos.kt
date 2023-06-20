@@ -114,11 +114,13 @@ fun IngresoDatos(
                 )
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .height(600.dp)
                         .constrainAs(form) {
                             top.linkTo(desc.bottom)
                             bottom.linkTo(nextButton.top)
-                        },
+                        }
+                        .background(MaterialTheme.colorScheme.background),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -208,7 +210,7 @@ fun IngresoDatos(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     RadioButton(
-                                        selected = (text == selectedOption2),
+                                        selected = (text == selectedOption),
                                         onClick = null // null recommended for accessibility with screenreaders
                                     )
                                     Text(
