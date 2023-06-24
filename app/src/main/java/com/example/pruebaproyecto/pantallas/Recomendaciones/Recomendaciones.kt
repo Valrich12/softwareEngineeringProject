@@ -32,6 +32,10 @@ fun Recomendaciones(
 ) {
 
     val recomendacionDesayuno = hacerRecomendacion(state.listAlimentos,state.clientData,1)
+    val recomendacionColacion1 = hacerRecomendacion(state.listAlimentos,state.clientData,2)
+    val recomendacionComida = hacerRecomendacion(state.listAlimentos,state.clientData,3)
+    val recomendacionColacion2 = hacerRecomendacion(state.listAlimentos,state.clientData,4)
+    val recomendacionCena = hacerRecomendacion(state.listAlimentos,state.clientData,5)
 
 
     Box(modifier = Modifier
@@ -68,7 +72,7 @@ fun Recomendaciones(
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                   state.listAlimentos.forEach(){alimento ->
+                   recomendacionColacion1.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -89,7 +93,7 @@ fun Recomendaciones(
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    state.listAlimentos.forEach(){alimento ->
+                    recomendacionComida.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -110,7 +114,7 @@ fun Recomendaciones(
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    state.listAlimentos.forEach(){alimento ->
+                    recomendacionColacion2.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }
@@ -131,7 +135,7 @@ fun Recomendaciones(
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    state.listAlimentos.forEach(){alimento ->
+                    recomendacionCena.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }

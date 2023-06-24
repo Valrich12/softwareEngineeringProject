@@ -46,7 +46,7 @@ constructor(
                     _state.value = MainNavState(isLoading = true)
                 }
                 is ResultClientData.Success -> {
-                    _state.value = _state.value.copy(clientData = result.data?: ClientData())
+                    _state.value = _state.value.copy(isLoading = false,clientData = result.data?: ClientData())
                 }
             }
         }.launchIn(viewModelScope)
@@ -63,7 +63,7 @@ constructor(
                     _state.value = MainNavState(isLoading = true)
                 }
                 is ResultListAlimentos.Success -> {
-                    _state.value = _state.value.copy(listAlimentos = result.data?: emptyList())
+                    _state.value = _state.value.copy(isLoading = false,listAlimentos = result.data?: emptyList())
                 }
             }
         }.launchIn(viewModelScope)

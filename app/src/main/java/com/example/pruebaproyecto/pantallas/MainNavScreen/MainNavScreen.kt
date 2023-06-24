@@ -35,6 +35,7 @@ import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionA
 import com.example.pruebaproyecto.pantallas.Recomendaciones.Recomendaciones
 import com.example.pruebaproyecto.pantallas.components.AlimentosDialog
 import com.example.pruebaproyecto.pantallas.components.EventDialog
+import com.example.pruebaproyecto.pantallas.components.LoadingDialog
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
@@ -143,6 +144,8 @@ fun MainNavScreen(
         }
         if(state.showListAlimentos ){
             AlimentosDialog(state = state, onDissmis = {onDissmiss()} , updateAlimentos = {updateAlimentos()})
+        }else if (state.isLoading){
+            LoadingDialog()
         }
     }
 
