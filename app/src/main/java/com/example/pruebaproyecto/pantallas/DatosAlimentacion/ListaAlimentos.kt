@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -31,41 +33,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
 var selectedItems =  mutableListOf<String>()
-var tiposAlimento : HashMap<String, MutableList<Alimento>> = hashMapOf(
-    "Alimentos Solidos" to mutableListOf<Alimento>(),
-    "Caldos" to mutableListOf<Alimento>()
-)
+var tiposAlimento : HashMap<String, MutableList<Alimento>> = HashMap()
 
-fun recibirAlimentos(){
-    /*
-        Idea
+fun recibirAlimentos(
+    listaAlimentos : List<Alimento>
+){
+        tiposAlimento = HashMap()
+        listaAlimentos.forEach(){ alimento ->
 
-        Reicibir alimentos
-
-        alimentos.foreach(){ alimento ->
-
-            if(!tiposAlimentos.contains(alimento.tipo)
+            if(!tiposAlimento.contains(alimento.tipo))
                 {
-                    tiposAlimento.put(alimento.tipo,mutableListOf()
+                    tiposAlimento.put(alimento.tipo,mutableListOf())
                     tiposAlimento.get(alimento.tipo)?.add(alimento)
             }
             else{
-                tiposAlimento.get(alimento6.tipo)?.add(alimento)
+                tiposAlimento.get(alimento.tipo)?.add(alimento)
             }
 
         }
 
 
-     */
+    /*
+    tiposAlimento.put("Alimentos Solidos", mutableListOf())
     //var tiposAlimentos = mutableListOf<MutableList<Alimento>>()
     var alimento1 = Alimento("Alambre","Alimentos Solidos")
     var alimento2 = Alimento("Albóndigas","Alimentos Solidos")
@@ -130,20 +130,24 @@ fun recibirAlimentos(){
     tiposAlimento.get(alimento25.tipo)?.add(alimento25)
     tiposAlimento.get(alimento26.tipo)?.add(alimento26)
     tiposAlimento.get(alimento27.tipo)?.add(alimento27)
+     */
 
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListaAlimentos() {
-    recibirAlimentos()
+fun ListaAlimentos(
+     onClick: () -> Unit,
+     state: MainNavState
+) {
+    recibirAlimentos(state.listAlimentos)
     var itemsLeft = 0
     var itemsCount = 0
 
-    Box(
+    Card(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+            .width(350.dp).height(750.dp),
+        shape = RoundedCornerShape(30.dp)
     ) {
         Column(
             modifier = Modifier
@@ -152,24 +156,6 @@ fun ListaAlimentos() {
 
         ){
 
-            Row (
-                verticalAlignment =  Alignment.CenterVertically
-            ){
-                IconButton(
-                    onClick = { /*TODO*/ })
-                {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back Icon",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-                Text(
-                    text = "Seleccion de Alimentos ",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-            }
             Spacer(modifier = Modifier.height(5.dp))
             Text(
                 text = "Selecciona los alimentos que consumas",
@@ -196,7 +182,7 @@ fun ListaAlimentos() {
                                 while (countRow > 0 && itemsLeft >= 0) {
                                     var isSelected by remember { mutableStateOf(false) }
                                     Box(
-                                        modifier = Modifier.width(118.dp),
+                                        modifier = Modifier.width(110.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         var name = key.value[itemsCount].nombre
@@ -249,7 +235,7 @@ fun ListaAlimentos() {
                             modifier = Modifier
                                 .size(70.dp),
 
-                            onClick = { /*TODO*/ }
+                            onClick = { onClick() }
                         ) {
                             Icon(
                                 modifier = Modifier.size(42.dp),
@@ -261,9 +247,26 @@ fun ListaAlimentos() {
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.fillMaxWidth().height(15.dp))
+                    Spacer(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp))
                 }
             }
+        }
+
+    }
+
+}
+@Preview
+@Composable
+fun ListAlimentosPreview() {
+    AppTheme() {
+        Box(
+            modifier = Modifier.fillMaxSize().background(Color.Black),
+            contentAlignment = Alignment.Center
+        )
+        {
+            ListaAlimentos(onClick = { /*TODO*/ }, state = MainNavState() )
         }
 
     }

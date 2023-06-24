@@ -32,12 +32,8 @@ fun Recomendaciones(
 ) {
 
     val recomendacionDesayuno = hacerRecomendacion(state.listAlimentos,state.clientData,1)
-    /*
-    val recomendacionColacion = hacerRecomendacion(state.listAlimentos,state.clientData,2)
-    val recomendacionComida = hacerRecomendacion(state.listAlimentos,state.clientData,3)
-    val recomendacionColacion2 = hacerRecomendacion(state.listAlimentos,state.clientData,4)
-    val recomendacionCena = hacerRecomendacion(state.listAlimentos,state.clientData,5)
-     */
+
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background))
@@ -72,7 +68,7 @@ fun Recomendaciones(
                     .fillMaxWidth()
                     .height(20.dp))
                 LazyRow(){
-                    state.listAlimentos.forEach(){alimento ->
+                   state.listAlimentos.forEach(){alimento ->
                         item {
                             CustomCards(alimento = alimento) {
                             }

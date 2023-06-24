@@ -33,6 +33,8 @@ import com.example.pruebaproyecto.R
 import com.example.pruebaproyecto.pantallas.DatosAlimentacion.IngresoAlimentos
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
 import com.example.pruebaproyecto.pantallas.Recomendaciones.Recomendaciones
+import com.example.pruebaproyecto.pantallas.components.AlimentosDialog
+import com.example.pruebaproyecto.pantallas.components.EventDialog
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
@@ -40,14 +42,17 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainNavScreen(
-    state: MainNavState
+    state: MainNavState,
+    onDissmiss: () -> Unit,
+    updateAlimentos: () -> Unit,
+    showAlimentos:()->Unit
 ) {
 
 
     val scope = rememberCoroutineScope()
     val tabs = listOf(
         TabItem("Recomendaciones", {Recomendaciones(state)}),
-        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state)}),
+        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state,showAlimentos)}),
         TabItem("Seguimiento", {InformacionAlimentacion(state)}),
     )
     var pagerState = rememberPagerState()
@@ -136,7 +141,11 @@ fun MainNavScreen(
 
 
         }
+        if(state.showListAlimentos ){
+            AlimentosDialog(state = state, onDissmis = {onDissmiss()} , updateAlimentos = {updateAlimentos()})
+        }
     }
+
 
 }
 

@@ -69,4 +69,13 @@ constructor(
         }.launchIn(viewModelScope)
 
     }
+    fun showAlimentos(){
+        _state.value = _state.value.copy(showListAlimentos = true)
+    }
+    fun updateAlimentosConsumidos(){
+        _state.value = _state.value.copy(showListAlimentos = false)
+    }
+    fun dissmisAlimentos(){
+        _state.value = _state.value.copy(showListAlimentos = false)
+    }
 }

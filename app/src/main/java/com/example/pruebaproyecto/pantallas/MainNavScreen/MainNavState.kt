@@ -8,5 +8,6 @@ data class MainNavState(
     val isLoading: Boolean = false,
     val clientData:ClientData = ClientData(),
     val listAlimentos: List<Alimento> = emptyList(),
-    val error: String =""
+    val error: String ="",
+    val showListAlimentos: Boolean =  false,
 )
