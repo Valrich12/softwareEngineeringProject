@@ -25,7 +25,6 @@ fun LoadingDialog() {
             usePlatformDefaultWidth = false
         )
     ) {
-
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
                 CircularProgressIndicator(
                     modifier = Modifier.size(100.dp),
@@ -33,7 +32,5 @@ fun LoadingDialog() {
                     strokeWidth = 6.dp
                 )
             }
-
-
     }
 }
