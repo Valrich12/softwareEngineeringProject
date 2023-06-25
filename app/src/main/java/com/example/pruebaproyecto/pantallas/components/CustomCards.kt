@@ -30,6 +30,7 @@ import com.example.pruebaproyecto.clases.Alimento
 import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
+import java.time.LocalTime
 
 @Composable
 fun CustomCards(alimento:Alimento,updateAlimentos:(AlimentoConsumed)-> Unit,clientId:String,getListAlimentoConsumed: ()->Unit) {
@@ -72,7 +73,7 @@ fun CustomCards(alimento:Alimento,updateAlimentos:(AlimentoConsumed)-> Unit,clie
             ElevatedButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    updateAlimentos(AlimentoConsumed(alimento,clientId))
+                    updateAlimentos(AlimentoConsumed(alimento,clientId,LocalTime.now().toString()))
                     getListAlimentoConsumed()
                           },
                 colors = ButtonDefaults.elevatedButtonColors(

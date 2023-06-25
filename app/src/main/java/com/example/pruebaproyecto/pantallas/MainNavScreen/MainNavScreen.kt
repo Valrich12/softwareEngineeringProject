@@ -66,13 +66,14 @@ fun MainNavScreen(
     onDissmiss: () -> Unit,
     updateAlimentos: (AlimentoConsumed) -> Unit,
     getListAlimentoConsumed: ()->Unit,
-    showAlimentos:()->Unit
+    showAlimentos:()->Unit,
+    deleteAlimentoConsumed: (AlimentoConsumed) -> Unit
 ) {
     var sumNutr = sumNutr(state.alimentosConsumed)
     val scope = rememberCoroutineScope()
     val tabs = listOf(
         TabItem("Recomendaciones", {Recomendaciones(state,updateAlimentos,getListAlimentoConsumed)}),
-        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state,showAlimentos,sumNutr)}),
+        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state,showAlimentos,sumNutr,deleteAlimentoConsumed)}),
         TabItem("Seguimiento", {InformacionAlimentacion(state,sumNutr)}),
     )
     var pagerState = rememberPagerState()

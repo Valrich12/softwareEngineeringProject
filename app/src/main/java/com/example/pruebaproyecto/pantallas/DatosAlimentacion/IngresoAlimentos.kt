@@ -43,7 +43,8 @@ import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 fun IngresoAlimentos(
     state:MainNavState,
     showAlimentos: () -> Unit,
-    sumNutr: List<Int>
+    sumNutr: List<Int>,
+    deleteAlimentoConsumed: (AlimentoConsumed) -> Unit
 ) {
 
     Box(modifier = Modifier
@@ -275,7 +276,7 @@ fun IngresoAlimentos(
                                                     .height(30.dp),
                                                 contentAlignment = Alignment.Center
                                             ) {
-                                                IconButton(onClick = {  /*TODO*/ }) {
+                                                IconButton(onClick = { deleteAlimentoConsumed(alimentoConsumed) }) {
                                                     Icon(
                                                         imageVector = Icons.Default.Delete,
                                                         contentDescription = "Icono Basura",

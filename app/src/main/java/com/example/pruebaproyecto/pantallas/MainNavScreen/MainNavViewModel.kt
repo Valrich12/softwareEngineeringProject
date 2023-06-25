@@ -103,6 +103,18 @@ constructor(
             _state.value = _state.value.copy(error = "Error Inesperado")
         }
     }
+    fun deleteAlimentosConsumed(alimentoConsumed: AlimentoConsumed){
+        try {
+            _state.value = _state.value.copy(isLoading = true)
+            consumedAlimentosRepository.deleteConsumedAlimentos(alimentoConsumed)
+            getAlimentosConsumed()
+            _state.value = _state.value.copy(isLoading = false)
+        } catch (e: Exception) {
+            // User creation failed
+            _state.value = _state.value.copy(isLoading = false)
+            _state.value = _state.value.copy(error = "Error Inesperado")
+        }
+    }
     fun showAlimentos(){
         _state.value = _state.value.copy(showListAlimentos = true)
     }

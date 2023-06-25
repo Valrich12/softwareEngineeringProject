@@ -46,6 +46,7 @@ import com.example.pruebaproyecto.clases.Alimento
 import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.ui.theme.AppTheme
+import java.time.LocalTime
 
 var selectedItems =  mutableListOf<String>()
 var tiposAlimento : HashMap<String, MutableList<Alimento>> = HashMap()
@@ -188,9 +189,11 @@ fun ListaAlimentos(
 
                                 val selectedItemsConsumed = state.listAlimentos.filter { it.nombre == nombre }
 
-                                val alimentoConsumed = AlimentoConsumed(selectedItemsConsumed.first(),state.clientData.clientId)
-
-                                updateAlimento(alimentoConsumed)
+                                val alimentoConsumed = AlimentoConsumed(
+                                                            selectedItemsConsumed.first(),
+                                                            state.clientData.clientId,
+                                                            LocalTime.now().toString())
+                                                        updateAlimento(alimentoConsumed)
                             }
                             getListAlimentosConsumed()
                             selectedItems.clear()

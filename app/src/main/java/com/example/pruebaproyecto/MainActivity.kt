@@ -243,7 +243,9 @@ fun NavGraphBuilder.addMain(
             updateAlimentos = viewModel::setAlimentosConsumed,
             showAlimentos = viewModel::showAlimentos,
             onDissmiss = viewModel::dissmisAlimentos,
-            getListAlimentoConsumed = viewModel::getAlimentosConsumed)
+            getListAlimentoConsumed = viewModel::getAlimentosConsumed,
+            deleteAlimentoConsumed = viewModel::deleteAlimentosConsumed)
+
     }
 }
 

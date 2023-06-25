@@ -19,9 +19,8 @@ constructor(
 )
 {
     fun addConsumedAlimentos(alimento: AlimentoConsumed){
-        val date = LocalTime.now()
         try {
-            listAlimentos.document(alimento.alimento.nombre+"_"+alimento.clientId+"_"+date.toString()).set(alimento)
+            listAlimentos.document(alimento.alimento.nombre+"_"+alimento.clientId+"_"+alimento.date).set(alimento)
         }catch (e:Exception){
             e.printStackTrace()
         }
@@ -38,5 +37,13 @@ constructor(
             emit(ResultListAlimentos.Error(message = e.localizedMessage?:"Error Desconocido"))
         }
 
+    }
+    fun deleteConsumedAlimentos(alimento: AlimentoConsumed){
+
+        try {
+            val docref = listAlimentos.document(alimento.alimento.nombre+"_"+alimento.clientId+"_"+alimento.date)
+            docref.delete()
+        }catch (e: Exception){
+            e.printStackTrace()        }
     }
 }
