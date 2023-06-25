@@ -27,11 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.ui.theme.AppTheme
 import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
 
 @Composable
-fun CustomCards(alimento:Alimento,buttonAction:()-> Unit) {
+fun CustomCards(alimento:Alimento,updateAlimentos:(AlimentoConsumed)-> Unit,clientId:String,getListAlimentoConsumed: ()->Unit) {
     
     Card(
         modifier = Modifier.size(height = 160.dp, width = 170.dp)
@@ -70,7 +71,10 @@ fun CustomCards(alimento:Alimento,buttonAction:()-> Unit) {
                 .height(10.dp))
             ElevatedButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = buttonAction,
+                onClick = {
+                    updateAlimentos(AlimentoConsumed(alimento,clientId))
+                    getListAlimentoConsumed()
+                          },
                 colors = ButtonDefaults.elevatedButtonColors(
                     containerColor = md_theme_light_primaryContainer,
                     contentColor = Color.Black
@@ -85,22 +89,5 @@ fun CustomCards(alimento:Alimento,buttonAction:()-> Unit) {
     
 }
 
-@Preview
-@Composable
-fun CustomCardPreview() {
-    AppTheme() {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            contentAlignment = Alignment.Center) {
-            CustomCards(alimento = alimentoPrueba) {
 
-            }
-        }
 
-    }
-
-}
-
-val alimentoPrueba = Alimento("Huevos","Alimento Solido",12,10,12)

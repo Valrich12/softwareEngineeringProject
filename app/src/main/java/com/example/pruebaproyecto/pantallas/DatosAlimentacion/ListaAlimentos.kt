@@ -1,5 +1,6 @@
 package com.example.pruebaproyecto.pantallas.DatosAlimentacion
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,7 +41,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.pruebaproyecto.Repositories.ResultListAlimentos
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.ui.theme.AppTheme
 
@@ -68,8 +71,10 @@ fun recibirAlimentos(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListaAlimentos(
-     onClick: () -> Unit,
-     state: MainNavState
+     updateAlimento: (AlimentoConsumed) -> Unit,
+     state: MainNavState,
+     onDissmis: () -> Unit,
+     getListAlimentosConsumed: () -> Unit
 ) {
     recibirAlimentos(state.listAlimentos)
     var itemsLeft = 0
@@ -100,7 +105,9 @@ fun ListaAlimentos(
 
                 Spacer(modifier = Modifier.height(15.dp))
                 LazyColumn(
-                     modifier = Modifier.fillMaxWidth().height(600.dp)
+                     modifier = Modifier
+                         .fillMaxWidth()
+                         .height(600.dp)
                 ) {
                     for (key in tiposAlimento) {
                         item {
@@ -176,7 +183,19 @@ fun ListaAlimentos(
                         modifier = Modifier
                             .size(70.dp),
 
-                        onClick = { onClick() }
+                        onClick = {
+                            selectedItems.forEach(){nombre->
+
+                                val selectedItemsConsumed = state.listAlimentos.filter { it.nombre == nombre }
+
+                                val alimentoConsumed = AlimentoConsumed(selectedItemsConsumed.first(),state.clientData.clientId)
+
+                                updateAlimento(alimentoConsumed)
+                            }
+                            getListAlimentosConsumed()
+                            selectedItems.clear()
+                            onDissmis()
+                        }
                     ) {
                         Icon(
                             modifier = Modifier.size(42.dp),

@@ -30,6 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.R
+import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.pantallas.DatosAlimentacion.IngresoAlimentos
 import com.example.pruebaproyecto.pantallas.InformacionAlimentacion.InformacionAlimentacion
 import com.example.pruebaproyecto.pantallas.Recomendaciones.Recomendaciones
@@ -41,20 +43,37 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
+fun sumNutr(
+    alimentos:List<AlimentoConsumed>
+):List<Int>{
+    var nutrientes = mutableListOf<Int>()
+    var proteina = 0
+    var grasa = 0
+    var carbs = 0
+    alimentos.forEach(){ alimentoConsumed ->
+        proteina += alimentoConsumed.alimento.proteina
+        grasa += alimentoConsumed.alimento.grasa
+        carbs += alimentoConsumed.alimento.carbohidratos
+    }
+    nutrientes.add(proteina)
+    nutrientes.add(grasa)
+    nutrientes.add(carbs)
+    return nutrientes
+}
 @Composable
 fun MainNavScreen(
     state: MainNavState,
     onDissmiss: () -> Unit,
-    updateAlimentos: () -> Unit,
+    updateAlimentos: (AlimentoConsumed) -> Unit,
+    getListAlimentoConsumed: ()->Unit,
     showAlimentos:()->Unit
 ) {
-
-
+    var sumNutr = sumNutr(state.alimentosConsumed)
     val scope = rememberCoroutineScope()
     val tabs = listOf(
-        TabItem("Recomendaciones", {Recomendaciones(state)}),
-        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state,showAlimentos)}),
-        TabItem("Seguimiento", {InformacionAlimentacion(state)}),
+        TabItem("Recomendaciones", {Recomendaciones(state,updateAlimentos,getListAlimentoConsumed)}),
+        TabItem("Ingreso de Alimentos", {IngresoAlimentos(state,showAlimentos,sumNutr)}),
+        TabItem("Seguimiento", {InformacionAlimentacion(state,sumNutr)}),
     )
     var pagerState = rememberPagerState()
     Box(modifier = Modifier
@@ -143,7 +162,7 @@ fun MainNavScreen(
 
         }
         if(state.showListAlimentos ){
-            AlimentosDialog(state = state, onDissmis = {onDissmiss()} , updateAlimentos = {updateAlimentos()})
+            AlimentosDialog(state = state, onDissmis = {onDissmiss()} , updateAlimentos = updateAlimentos, getListAlimentoConsumed = getListAlimentoConsumed)
         }else if (state.isLoading){
             LoadingDialog()
         }

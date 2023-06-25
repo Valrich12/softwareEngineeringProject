@@ -34,5 +34,12 @@ object AppModule {
         firestore: FirebaseFirestore
     ) = firestore.collection("listAlimentos")
 
+    @Provides
+    @Singleton
+    @Named("consumedAlimentos")
+    fun provideConsumedAlimentos(
+        firestore: FirebaseFirestore
+    ) = firestore.collection("consumedAlimentos")
+
 
 }

@@ -2,6 +2,7 @@ package com.example.pruebaproyecto.pantallas.MainNavScreen
 
 import com.example.pruebaproyecto.Repositories.ResultListAlimentos
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.clases.ClientData
 
 data class MainNavState(
@@ -10,4 +11,5 @@ data class MainNavState(
     val listAlimentos: List<Alimento> = emptyList(),
     val error: String ="",
     val showListAlimentos: Boolean =  false,
+    val alimentosConsumed: List<AlimentoConsumed> = emptyList()
 )

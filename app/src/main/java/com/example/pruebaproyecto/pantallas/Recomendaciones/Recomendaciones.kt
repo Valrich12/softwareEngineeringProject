@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.clases.ClientData
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.pantallas.components.CustomCards
@@ -28,7 +29,9 @@ import com.example.pruebaproyecto.ui.theme.AppTheme
 
 @Composable
 fun Recomendaciones(
-    state:MainNavState
+    state:MainNavState,
+    updateAlimentos: (AlimentoConsumed) ->Unit,
+    getListAlimentoConsumed: () -> Unit
 ) {
 
     val recomendacionDesayuno = hacerRecomendacion(state.listAlimentos,state.clientData,1)
@@ -53,8 +56,7 @@ fun Recomendaciones(
                 LazyRow(){
                    recomendacionDesayuno.forEach(){alimento ->
                         item {
-                            CustomCards(alimento = alimento) {
-                            }
+                            CustomCards(alimento = alimento,updateAlimentos = updateAlimentos, clientId = state.clientData.clientId,getListAlimentoConsumed)
                             Spacer(modifier = Modifier
                                 .fillMaxHeight()
                                 .width(20.dp))
@@ -74,8 +76,7 @@ fun Recomendaciones(
                 LazyRow(){
                    recomendacionColacion1.forEach(){alimento ->
                         item {
-                            CustomCards(alimento = alimento) {
-                            }
+                            CustomCards(alimento = alimento,updateAlimentos = updateAlimentos, clientId = state.clientData.clientId,getListAlimentoConsumed)
                             Spacer(modifier = Modifier
                                 .fillMaxHeight()
                                 .width(20.dp))
@@ -95,8 +96,7 @@ fun Recomendaciones(
                 LazyRow(){
                     recomendacionComida.forEach(){alimento ->
                         item {
-                            CustomCards(alimento = alimento) {
-                            }
+                            CustomCards(alimento = alimento,updateAlimentos = updateAlimentos, clientId = state.clientData.clientId,getListAlimentoConsumed)
                             Spacer(modifier = Modifier
                                 .fillMaxHeight()
                                 .width(20.dp))
@@ -116,8 +116,7 @@ fun Recomendaciones(
                 LazyRow(){
                     recomendacionColacion2.forEach(){alimento ->
                         item {
-                            CustomCards(alimento = alimento) {
-                            }
+                            CustomCards(alimento = alimento,updateAlimentos = updateAlimentos, clientId = state.clientData.clientId,getListAlimentoConsumed)
                             Spacer(modifier = Modifier
                                 .fillMaxHeight()
                                 .width(20.dp))
@@ -137,8 +136,7 @@ fun Recomendaciones(
                 LazyRow(){
                     recomendacionCena.forEach(){alimento ->
                         item {
-                            CustomCards(alimento = alimento) {
-                            }
+                            CustomCards(alimento = alimento,updateAlimentos = updateAlimentos, clientId = state.clientData.clientId,getListAlimentoConsumed)
                             Spacer(modifier = Modifier
                                 .fillMaxHeight()
                                 .width(20.dp))
@@ -192,11 +190,7 @@ fun hacerRecomendacion(alimentos: List<Alimento>,clientData: ClientData,comida:I
 
     val grasaSuperior = (clientData.grasas*multSup).toInt()
     val grasaInferior = (clientData.grasas*multInf).toInt()
-    if (comida == 1){
-        Log.d("CARBS","CARBS= "+carbsInferior.toString()+"< "+carbsSuperior.toString())
-        Log.d("CARBS","PROT= "+protInferior.toString()+"< "+protSuperior.toString())
-        Log.d("CARBS","GRASA= "+grasaInferior.toString()+"< "+grasaSuperior.toString())
-    }
+
     val recomendacion = alimentos.filter {
         (it.carbohidratos in carbsInferior..carbsSuperior) and (it.proteina in protInferior..protSuperior) and (it.grasa in grasaInferior..grasaSuperior)}
 

@@ -239,7 +239,11 @@ fun NavGraphBuilder.addMain(
     ){
         val viewModel:MainNavViewModel = hiltViewModel()
         val state = viewModel.state.value
-        MainNavScreen(state = state, updateAlimentos = viewModel::updateAlimentosConsumidos, showAlimentos = viewModel::showAlimentos, onDissmiss = viewModel::dissmisAlimentos)
+        MainNavScreen(state = state,
+            updateAlimentos = viewModel::setAlimentosConsumed,
+            showAlimentos = viewModel::showAlimentos,
+            onDissmiss = viewModel::dissmisAlimentos,
+            getListAlimentoConsumed = viewModel::getAlimentosConsumed)
     }
 }
 

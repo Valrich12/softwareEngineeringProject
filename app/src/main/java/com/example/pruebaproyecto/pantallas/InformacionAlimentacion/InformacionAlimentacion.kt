@@ -32,7 +32,10 @@ import com.example.pruebaproyecto.ui.theme.AppTheme
 
 
 @Composable
-fun InformacionAlimentacion(state:MainNavState) {
+fun InformacionAlimentacion(
+    state:MainNavState,
+    sumNutr: List<Int>
+) {
 
     Box(
         modifier = Modifier
@@ -66,7 +69,7 @@ fun InformacionAlimentacion(state:MainNavState) {
                                 start.linkTo(parent.start, margin = 30.dp)
                             },
                     ) {
-                        InformacionEnergiaGraph(clientData = state.clientData)
+                        InformacionEnergiaGraph(clientData = state.clientData, currentValue = sumNutr[2].toFloat())
                     }
                     Box(
                         modifier = Modifier
@@ -83,7 +86,7 @@ fun InformacionAlimentacion(state:MainNavState) {
                                 top.linkTo(graphEner.bottom, margin = 20.dp)
                                 start.linkTo(parent.start, margin = 30.dp)
                             }) {
-                        InformacionProteinaGraph(clientData = state.clientData)
+                        InformacionProteinaGraph(clientData = state.clientData, currentValue = sumNutr[0].toFloat())
                     }
                     Box(
                         modifier = Modifier
@@ -100,7 +103,7 @@ fun InformacionAlimentacion(state:MainNavState) {
                                 top.linkTo(graphProt.bottom, margin = 20.dp)
                                 start.linkTo(parent.start, margin = 30.dp)
                             }) {
-                        InformacionGrasaGraph(clientData = state.clientData)
+                        InformacionGrasaGraph(clientData = state.clientData, currentValue = sumNutr[1].toFloat())
                     }
 
                 }
@@ -113,9 +116,10 @@ fun InformacionAlimentacion(state:MainNavState) {
 @Composable
 private fun InformacionEnergiaGraph (
     modifier: Modifier = Modifier,
-    clientData:ClientData
+    clientData:ClientData,
+    currentValue: Float
 ) {
-    val cantidadesBar = listOf<Float>(fakeDataEnergia.cantidadActual,clientData.carbs )
+    val cantidadesBar = listOf<Float>(currentValue,clientData.carbs )
     val labels = listOf<String>(fakeDataEnergia.tipoMacro+" Actuales", fakeDataEnergia.tipoMacro +" Recomendados")
     val cantidades = listOf<Int>(100,200,300,400,500,600,700)
     InfoGrafica(
@@ -141,9 +145,10 @@ private fun InformacionEnergiaGraph (
 @Composable
 private fun InformacionProteinaGraph (
         modifier: Modifier=Modifier,
-        clientData: ClientData
+        clientData: ClientData,
+        currentValue: Float
 ) {
-    val cantidadesBar = listOf<Float>(fakeDataProteina.cantidadActual, clientData.proteinas)
+    val cantidadesBar = listOf<Float>(currentValue, clientData.proteinas)
     val labels = listOf<String>(fakeDataProteina.tipoMacro+" \nActual", fakeDataProteina.tipoMacro +" Recomendada")
     val cantidades = listOf<Int>(30,60,90,120,150,180,210)
     InfoGrafica(
@@ -169,9 +174,10 @@ private fun InformacionProteinaGraph (
 @Composable
 private fun InformacionGrasaGraph (
     modifier: Modifier=Modifier,
-    clientData: ClientData
+    clientData: ClientData,
+    currentValue: Float
 ) {
-    val cantidadesBar = listOf<Float>(fakeDataGrasa.cantidadActual, clientData.grasas)
+    val cantidadesBar = listOf<Float>(currentValue, clientData.grasas)
     val labels = listOf<String>(fakeDataGrasa.tipoMacro+" \nActual", fakeDataGrasa.tipoMacro +" Recomendada")
     val cantidades = listOf<Int>(30,60,90,120,150,180,210)
     InfoGrafica(

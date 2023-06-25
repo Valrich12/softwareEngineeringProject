@@ -34,14 +34,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pruebaproyecto.clases.Alimento
+import com.example.pruebaproyecto.clases.AlimentoConsumed
 import com.example.pruebaproyecto.pantallas.MainNavScreen.MainNavState
 import com.example.pruebaproyecto.ui.theme.md_theme_light_primaryContainer
+
 
 @Composable
 fun IngresoAlimentos(
     state:MainNavState,
-    showAlimentos: () -> Unit
+    showAlimentos: () -> Unit,
+    sumNutr: List<Int>
 ) {
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background) ){
@@ -55,12 +59,12 @@ fun IngresoAlimentos(
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(40.dp)
+                            .height(20.dp)
                     )
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
-                                text = "Macronutrientes Diarios",
+                                text = "Macronutrientes Consumidos Hoy",
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Bold,
@@ -114,7 +118,7 @@ fun IngresoAlimentos(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        text = "560 kcal",
+                                        text = sumNutr[2].toString()+" kcal",
                                         color = MaterialTheme.colorScheme.onBackground
                                     )
                                 }
@@ -123,7 +127,7 @@ fun IngresoAlimentos(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        text = "60 gr",
+                                        text = sumNutr[0].toString()+" gr",
                                         color = MaterialTheme.colorScheme.onBackground
                                     )
                                 }
@@ -132,7 +136,7 @@ fun IngresoAlimentos(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        text = "20 gr",
+                                        text = sumNutr[1].toString()+" gr",
                                         color = MaterialTheme.colorScheme.onBackground
                                     )
                                 }
@@ -211,8 +215,10 @@ fun IngresoAlimentos(
                                     .fillMaxWidth()
                                     .height(15.dp)
                             )
-                            LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-                                alimentos.forEach() { alimento ->
+                            LazyColumn(
+                                modifier = Modifier.fillMaxWidth().height(300.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally) {
+                                state.alimentosConsumed.forEach() { alimentoConsumed ->
                                     item {
                                         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                             Box(
@@ -222,7 +228,7 @@ fun IngresoAlimentos(
                                                 contentAlignment = Alignment.Center
                                             ) {
                                                 Text(
-                                                    text = alimento.nombre,
+                                                    text = alimentoConsumed.alimento.nombre,
                                                     color = MaterialTheme.colorScheme.onBackground,
                                                     fontSize = 14.sp
                                                 )
@@ -234,7 +240,7 @@ fun IngresoAlimentos(
                                                 contentAlignment = Alignment.Center
                                             ) {
                                                 Text(
-                                                    text = alimento.carbohidratos.toString(),
+                                                    text = alimentoConsumed.alimento.carbohidratos.toString(),
                                                     color = MaterialTheme.colorScheme.onBackground,
                                                     fontSize = 14.sp
                                                 )
@@ -246,7 +252,7 @@ fun IngresoAlimentos(
                                                 contentAlignment = Alignment.Center
                                             ) {
                                                 Text(
-                                                    text = alimento.proteina.toString(),
+                                                    text = alimentoConsumed.alimento.proteina.toString(),
                                                     color = MaterialTheme.colorScheme.onBackground,
                                                     fontSize = 14.sp
                                                 )
@@ -258,7 +264,7 @@ fun IngresoAlimentos(
                                                 contentAlignment = Alignment.Center
                                             ) {
                                                 Text(
-                                                    text = alimento.grasa.toString(),
+                                                    text = alimentoConsumed.alimento.grasa.toString(),
                                                     color = MaterialTheme.colorScheme.onBackground,
                                                     fontSize = 14.sp
                                                 )
@@ -292,19 +298,19 @@ fun IngresoAlimentos(
                                             .fillMaxWidth()
                                             .height(15.dp)
                                     )
-                                    ElevatedButton(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        onClick = {
-                                                  showAlimentos()
-                                                  },
-                                        colors = elevatedButtonColors(
-                                            containerColor = md_theme_light_primaryContainer,
-                                            contentColor = Color.Black
-                                        )
-                                    ) { Text("Agregar Alimento") }
 
                                 }
                             }
+                            ElevatedButton(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = {
+                                    showAlimentos()
+                                },
+                                colors = elevatedButtonColors(
+                                    containerColor = md_theme_light_primaryContainer,
+                                    contentColor = Color.Black
+                                )
+                            ) { Text("Agregar Alimento") }
 
                         }
                     }
@@ -317,16 +323,7 @@ fun IngresoAlimentos(
 
 }
 
-val alimentos = mutableListOf(
-    Alimento("Manzana","Frutas"),
-    Alimento("Zanahoria","Verduras"),
-    Alimento("Maiz","Cereales"),
-    Alimento("Fresa","Frutas"),
-    Alimento("Tomate","Verduras"),
-    Alimento("Arroz","Cereales"),
-    Alimento("Raiz","Cereales")
 
-)
 
 
 
