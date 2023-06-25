@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.pruebaproyecto.Repositories.ResultListAlimentos
 import com.example.pruebaproyecto.clases.Alimento
@@ -125,14 +126,14 @@ fun ListaAlimentos(
                                     while (countRow > 0 && itemsLeft >= 0) {
                                         var isSelected by remember { mutableStateOf(false) }
                                         Box(
-                                            modifier = Modifier.width(120.dp),
+                                            modifier = Modifier.width(115.dp),
                                             contentAlignment = Alignment.Center
                                         ) {
                                             var name = key.value[itemsCount].nombre
                                             isSelected = selectedItems.contains(name)
                                             FilterChip(
                                                 modifier = Modifier
-                                                    .width(118.dp)
+                                                    .width(115.dp)
                                                     .height(50.dp)
                                                     .padding(2.dp),
                                                 selected = isSelected,
@@ -145,7 +146,7 @@ fun ListaAlimentos(
                                                     }
                                                 },
                                                 label = {
-                                                    Text(text = key.value[itemsCount].nombre)
+                                                    Text(text = key.value[itemsCount].nombre, fontSize = 12.sp)
                                                 },
                                                 leadingIcon = if (isSelected) {
                                                     {

@@ -162,23 +162,23 @@ fun hacerRecomendacion(alimentos: List<Alimento>,clientData: ClientData,comida:I
     when(comida){
         1 -> {
             multSup =.20f
-            multInf = 0.10f
+            multInf = 0.0f
         }
         2 -> {
-            multSup =.10f
-            multInf = 0.05f
+            multSup =.15f
+            multInf = 0.0f
         }
         3 -> {
             multSup =.33f
-            multInf = 0.27f
+            multInf = 0.10f
         }
         4 -> {
             multSup =.10f
-            multInf = 0.05f
+            multInf = 0.0f
         }
         5 -> {
             multSup =.30f
-            multInf = 0.25f
+            multInf = 0.10f
         }
     }
 
